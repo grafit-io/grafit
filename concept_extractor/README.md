@@ -1,8 +1,12 @@
 # Concept Extractor
 
+Install Dependencies
 ```
 pipenv install
 pipenv shell
+```
 
-pytest
+Run Tests
+```
+PYTHONPATH=./concept_extractor pytest
 ```

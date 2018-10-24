@@ -6,6 +6,7 @@ name = "pypi"
 [dev-packages]
 pytest = "*"
 pylint = "*"
+"autopep8" = "*"
 
 [packages]
 textblob = "*"
