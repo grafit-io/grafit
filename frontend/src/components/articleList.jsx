@@ -57,9 +57,9 @@ class ArticleList extends Component {
             <hr />
             <h2>{article.title}</h2>
             {article.tags.map(tag => (
-              <a href="#" className="badge badge-info" key={tag.id}>
+              <span className="badge badge-info" key={tag.id}>
                 {tag.name}
-              </a>
+              </span>
             ))}
             <p>{article.text}</p>
           </div>
