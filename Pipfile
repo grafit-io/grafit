@@ -5,8 +5,10 @@ name = "pypi"
 
 [dev-packages]
 pytest = "*"
+pylint = "*"
 
 [packages]
+textblob = "*"
 
 [requires]
 python_version = "3.6"
