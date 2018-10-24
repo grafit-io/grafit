@@ -1,0 +1,15 @@
+site_name: grafit.io
+site_description: Shared Knowledge
+repo_url: https://github.com/grafit-io/grafit
+site_dir: site
+copyright: Copyright &copy; 2018, <a href="https://github.com/grafit-io">grafit</a>.
+dev_addr: 0.0.0.0:8001
+
+pages:
+  - Home: 'index.md'
+  - API:
+    - Authentication: 'api/authentication.md'
+    - Users: 'api/users.md'
+
+theme:
+  name: readthedocs
