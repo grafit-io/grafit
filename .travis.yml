@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - 8
+cache:
+  directories:
+    - frontend/node_modules
+script:
+  - cd frontend && npm run build && npm test
