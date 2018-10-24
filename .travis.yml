@@ -5,4 +5,4 @@ cache:
   directories:
     - frontend/node_modules
 script:
-  - cd frontend && npm run build && npm test
+  - cd frontend && npm install && npm run build && npm test
