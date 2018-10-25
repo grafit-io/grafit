@@ -1,11 +1,11 @@
-# django-rest-test
+# grafit-io
 
 [![Build Status](https://travis-ci.org/grafit-io/grafit.svg?branch=master)](https://travis-ci.org/grafit-io/grafit)
-[![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
+
 
 # Prerequisites
 
-- Docker [Mac](https://docs.docker.com/docker-for-mac/install/) [Windows][https://docs.docker.com/docker-for-windows/install/)
+- Docker [Mac](https://docs.docker.com/docker-for-mac/install/) / [Windows](https://docs.docker.com/docker-for-windows/install/)
 
 # Initialize the project
 
