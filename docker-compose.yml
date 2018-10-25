@@ -1,0 +1,20 @@
+version: '2.1'
+
+services:
+  backend:
+    image: grafit
+    build: .
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - ./:/code
+    
+  documentation:
+    restart: always
+    build: ./
+    command: "mkdocs serve"
+    volumes:
+      - ./:/code
+    ports:
+      - "8001:8001"
