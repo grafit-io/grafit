@@ -10,6 +10,10 @@ pylint = "*"
 
 [packages]
 textblob = "*"
+djangorestframework = "*"
+django = "*"
+markdown = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.6"
