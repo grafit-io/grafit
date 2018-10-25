@@ -18,7 +18,7 @@ docker-compose up
 Create a superuser to login to the admin:
 
 ```bash
-docker-compose run --rm web ./manage.py createsuperuser
+docker-compose run --rm backend ./manage.py createsuperuser
 ```
 
 

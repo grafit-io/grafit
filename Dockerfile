@@ -9,10 +9,10 @@ COPY ./Pipfile.lock Pipfile.lock
 RUN pip install pipenv
 RUN pipenv install --system --deploy --ignore-pipfile
 
-COPY . /code
+COPY ./backend /code
 WORKDIR /code
 
 # Migrates the database, uploads staticfiles
 # TODO run with gunicorn
-CMD ./backend/manage.py migrate && \
-    ./backend/manage.py runserver 0.0.0.0:8000
+CMD ./manage.py migrate && \
+    ./manage.py runserver 0.0.0.0:8000
