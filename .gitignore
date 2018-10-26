@@ -2,4 +2,8 @@
 .pytest_cache
 *.pyc
 *.sqlite3
+<<<<<<< HEAD
 /backend/static
+=======
+*.sqlite3-journal
+>>>>>>> master

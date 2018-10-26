@@ -21,6 +21,11 @@ Create a superuser to login to the admin:
 docker-compose run --rm backend ./manage.py createsuperuser
 ```
 
+For database migrations run:
+```bash
+docker-compose run --rm backend ./manage.py makemigrations
+```
+
 
 # Continuous Deployment
 
