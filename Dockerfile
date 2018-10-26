@@ -15,4 +15,5 @@ WORKDIR /code
 # Migrates the database, uploads staticfiles
 # TODO run with gunicorn
 CMD ./manage.py migrate && \
+    ./manage.py collectstatic --noinput && \
     gunicorn --bind 0.0.0.0:8000 --access-logfile - backend.wsgi:application
