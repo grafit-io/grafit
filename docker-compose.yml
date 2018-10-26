@@ -1,6 +1,10 @@
 version: '2.1'
 
 services:
+  
+  db:
+    image: postgres
+
   backend:
     image: grafit
     build: .
@@ -9,7 +13,9 @@ services:
     restart: always
     volumes:
       - ./backend:/code
-    
+    depends_on:
+      - db
+
   documentation:
     restart: always
     build: ./mkdocs
