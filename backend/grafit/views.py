@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Group
-from .models import User
+from .models import User, Article
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny
-from grafit.serializers import UserSerializer, GroupSerializer, CreateUserSerializer
+from grafit.serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -31,3 +31,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer

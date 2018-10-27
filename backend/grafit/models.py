@@ -20,3 +20,9 @@ class User(AbstractUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+@python_2_unicode_compatible
+class Article(models.Model):
+    title = models.CharField(max_length=250)
+    text = models.TextField()
