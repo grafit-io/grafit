@@ -31,4 +31,4 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Article
-        fields = ('url', 'title', 'text')
+        fields = ('id', 'url', 'title', 'text')
