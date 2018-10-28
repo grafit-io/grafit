@@ -17,6 +17,7 @@ django-filter = "*"
 gunicorn = "*"
 whitenoise = "*"
 "psycopg2-binary" = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.6"
