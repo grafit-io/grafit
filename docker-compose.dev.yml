@@ -6,7 +6,9 @@ services:
 
   backend:
     image: grafit-backend
-    build: .
+    build: 
+      context: .
+      target: base
     ports:
       - 8000:8000
     restart: always
