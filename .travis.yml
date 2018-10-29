@@ -8,7 +8,7 @@ cache:
     - frontend/node_modules
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.7.1
+  - DOCKER_COMPOSE_VERSION=1.17.1
 
 before_install:
   - docker -v
