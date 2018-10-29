@@ -23,6 +23,7 @@ services:
     restart: always
     volumes:
       - ./frontend:/usr/src/grafit
+      - /usr/src/grafit/node_modules
     depends_on:
       - backend
 
