@@ -8,6 +8,7 @@ COPY ./Pipfile Pipfile
 COPY ./Pipfile.lock Pipfile.lock
 RUN pip install pipenv
 RUN pipenv install --system --deploy --ignore-pipfile
+RUN python -m textblob.download_corpora
 
 COPY ./backend /code
 WORKDIR /code
@@ -16,4 +17,6 @@ WORKDIR /code
 # TODO run with gunicorn
 CMD ./manage.py migrate && \
     ./manage.py collectstatic --noinput && \
-    gunicorn --bind 0.0.0.0:8000 --access-logfile - backend.wsgi:application
+    ./manage.py runserver 0.0.0.0:8000
+
+#PROD => gunicorn --bind 0.0.0.0:8000 --access-logfile - backend.wsgi:application

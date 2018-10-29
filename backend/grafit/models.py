@@ -25,4 +25,5 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 @python_2_unicode_compatible
 class Article(models.Model):
     title = models.CharField(max_length=250)
-    text = models.TextField()
+    text = models.TextField(blank=True)
+    related = models.ManyToManyField("self", blank=True)

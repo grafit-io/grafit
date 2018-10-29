@@ -3,6 +3,7 @@ import csv
 from textblob import TextBlob as tb
 import math
 from pkg_resources import resource_string
+from ..models import Article
 
 
 class ExtractStrategyAbstract(object):
@@ -23,7 +24,7 @@ class FakeExtractStrategy(ExtractStrategyAbstract):
 class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
 
     def __init__(self):
-        self.corpus = self.load_corpus()
+        self.corpus = self.load_corpus_db()
 
     def tf(self, word, blob):
         return blob.words.count(word) / len(blob.words)
@@ -45,6 +46,16 @@ class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
         tbs = []
         for result in results:
             tbs.append(tb(result[1] + " " + result[2]))
+
+        return tbs
+
+    
+    def load_corpus_db(self):
+        articles = Article.objects.all()
+
+        tbs = []
+        for article in articles:
+            tbs.append(tb(article.title + " " + article.text))
 
         return tbs
 

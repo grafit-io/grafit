@@ -1,7 +1,10 @@
 from django.contrib.auth.models import Group
 from .models import User, Article
+from .concept_runner import ConceptRunner
 from rest_framework import viewsets, mixins
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from grafit.serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer
 
 
@@ -35,3 +38,11 @@ class GroupViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+
+
+class ConceptRunnerAPI(APIView):
+    def get(self, request, format=None):
+        runner = ConceptRunner()
+        response = runner.generate_graph()
+        return Response(response)
+        
