@@ -8,18 +8,22 @@ cache:
     - frontend/node_modules
 
 env:
-  - DOCKER_COMPOSE_VERSION=2.3
+  - DOCKER_COMPOSE_VERSION=1.7.1
 
 before_install:
+  - docker -v
+  - docker-compose -v
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
+  - docker -v
+  - docker-compose -v
 
 script:
   - docker-compose -f docker-compose.dev.yml build
-  - docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test
+  - docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test --no-input
   - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test
   - fossa
   - docker-compose rm -f
