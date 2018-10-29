@@ -1,65 +1,61 @@
 import React, { Component } from "react";
 
+const API = 'http://localhost:8000/api/v1/'
+const AUTH_API = 'http://localhost:8000/api-token-auth/'
+const DEFAULT_QUERY = "articles/"
+
 class ArticleList extends Component {
   state = {
-    articles: [
+    articles: []
+  }
+
+  componentDidMount() {
+
+    fetch(AUTH_API,
       {
-        id: 1,
-        title: "How to build an app with react",
-        text:
-          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-        tags: [
-          {
-            id: 1,
-            name: "React"
-          },
-          {
-            id: 2,
-            name: "Customer"
-          },
-          {
-            id: 3,
-            name: "Tag 3"
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({ username: 'admin', password: 'admin' })
+      })
+      .then(response => response.json())
+      .then(data => {
+        let token = data['token']
+        console.log(token)
+
+        fetch(API + DEFAULT_QUERY, {
+          headers: {
+            'Authorization': 'Token ' + token
           }
-        ]
-      },
-      {
-        id: 2,
-        title: "Let's encrypt: changing the world",
-        text:
-          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam",
-        tags: []
-      },
-      {
-        id: 3,
-        title: "Why a relational database is the right thing for you!",
-        text:
-          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,",
-        tags: [
-          {
-            id: 1,
-            name: "React"
-          },
-          {
-            id: 2,
-            name: "Customer"
-          }
-        ]
-      }
-    ]
-  };
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Something went wrong ...');
+            }
+          })
+          .then(data => this.setState({ articles: data }))
+          .catch(error => console.log(error));
+      })
+      .catch(function (res) { console.log(res) })
+  }
 
   render() {
     return (
       <div>
-        {this.state.articles.map(article => (
+        {this.state.articles.filter(article => article.text !== "").map(article => (
           <div key={article.id}>
             <hr />
             <h2>{article.title}</h2>
-            {article.tags.map(tag => (
-              <span className="badge badge-info" key={tag.id}>
-                {tag.name}
-              </span>
+            {article.related.map(tag => (
+              <a href={`/articles/${tag.id}`} >
+                <span className="badge badge-info" key={tag.id}>
+                  {tag.title}
+                </span>
+              </a>
             ))}
             <p>{article.text}</p>
           </div>
