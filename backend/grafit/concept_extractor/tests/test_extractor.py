@@ -1,4 +1,4 @@
-from concept_extractor.extractor import FakeExtractStrategy, TextblobTfIdfExtractStrategy
+from grafit.concept_extractor.extractor import FakeExtractStrategy, TextblobTfIdfExtractStrategy
 
 
 def test_function():

@@ -26,6 +26,11 @@ For database migrations run:
 docker-compose run --rm backend ./manage.py makemigrations
 ```
 
+To run tests:
+```bash
+docker-compose run --rm backend ./manage.py test
+```
+
 
 # Continuous Deployment
 
