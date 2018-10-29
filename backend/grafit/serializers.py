@@ -28,7 +28,16 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
+
+class SubArticleSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Article
+        fields = ('url', 'id', 'title')
+
+
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
+    related = SubArticleSerializer(many=True)
+
     class Meta:
         model = Article
         fields = ('id', 'url', 'title', 'text', 'related')

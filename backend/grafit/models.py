@@ -27,3 +27,7 @@ class Article(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField(blank=True)
     related = models.ManyToManyField("self", blank=True)
+
+    def __unicode__(self):
+        return '{"title": %s, "title" %s}' % (self.id, self.title)
+        
