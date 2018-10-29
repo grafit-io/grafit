@@ -1,0 +1,41 @@
+version: "2.3"
+
+services:
+  db:
+    image: postgres
+
+  backend:
+    image: grafit-backend
+    build:
+      context: .
+      target: prod
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - ./backend:/code
+    depends_on:
+      - db
+
+  frontend:
+    image: grafit-frontend
+    build:
+      context: ./frontend
+      target: prod
+    ports:
+      - 3000:80
+    restart: always
+    volumes:
+      - ./frontend:/usr/src/grafit
+      - /usr/src/grafit/node_modules
+    depends_on:
+      - backend
+
+  documentation:
+    image: grafit-docs
+    build: ./mkdocs
+    restart: always
+    volumes:
+      - ./mkdocs:/code
+    ports:
+      - "8001:8001"

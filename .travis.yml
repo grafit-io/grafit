@@ -1,16 +1,38 @@
-language: node_js
-node_js:
-  - 8
+sudo: required
+
+services:
+  - docker
+
 cache:
   directories:
     - frontend/node_modules
+
+env:
+  - DOCKER_COMPOSE_VERSION=2.3
+
 before_install:
-  - cd frontend
-install:
-  - npm install
-before_script:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
   - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
+
 script:
-  - npm run build
-  - npm test
+  - docker-compose -f docker-compose.dev.yml build
+  - docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test
+  - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test
   - fossa
+  - docker-compose rm -f
+
+  - docker-compose -f docker-compose.build.yml build
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  - docker tag grafit-frontend:latest grafitio/grafit-frontend
+  - docker push grafitio/grafit-frontend
+
+  - docker tag grafit-backend:latest grafitio/grafit-backend
+  - docker push grafitio/grafit-backend
+
+  - docker tag grafit-docs:latest grafitio/grafit-docs
+  - docker push grafitio/grafit-docs
