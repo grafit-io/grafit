@@ -10,7 +10,7 @@ RUN pip install pipenv
 RUN pipenv install --system --deploy --ignore-pipfile
 RUN python -m textblob.download_corpora
 
-COPY ./backend /code
+COPY . /code
 WORKDIR /code
 
 # Migrates the database, uploads staticfiles
