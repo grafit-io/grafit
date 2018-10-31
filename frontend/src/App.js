@@ -5,8 +5,14 @@ import ArticleDetail from "./components/articleDetail";
 import "./App.css";
 
 
-const API = 'http://localhost:8000/api/v1/'
-const AUTH_API = 'http://localhost:8000/api-token-auth/'
+let BASE_URL = window.location.toString()
+
+if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "0.0.0.0") {
+  BASE_URL = 'http://' + window.location.hostname + ':8000'
+}
+
+const API = BASE_URL + '/api/v1/'
+const AUTH_API = BASE_URL + '/api-token-auth/'
 const DEFAULT_QUERY = "articles/"
 
 class App extends Component {
