@@ -1,4 +1,4 @@
-FROM python:3.6 as base
+FROM python:3.6-slim as base
 
 LABEL Name=grafit Version=0.0.1
 EXPOSE 8000
