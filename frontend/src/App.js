@@ -58,7 +58,7 @@ class App extends Component {
       <Router>
         <div className="container">
           <Link to="/">
-            <h1 style={{ color: 'black' }}>grafit.io</h1>
+            <h1 className="title">grafit.io</h1>
           </Link>
           {this.state.articles && (
             <Route exact path="/" render={() => (
