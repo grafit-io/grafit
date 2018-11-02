@@ -6,6 +6,10 @@ class ConceptRunner:
 
         print("[ConceptRunner] generating graph")
         articles = Article.objects.all()
+
+        for article in articles:
+            article.related.clear()
+
         tfidf_extractor = TextblobTfIdfExtractStrategy()
 
         for article in articles:
