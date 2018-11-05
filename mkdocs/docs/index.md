@@ -1,7 +1,7 @@
 # grafit-io
 
-[![Build Status](https://travis-ci.org/grafit-io/grafit.svg?branch=master)](https://travis-ci.org/grafit-io/grafit)
-
+[![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit) 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit?ref=badge_shield)
 
 # Prerequisites
 
@@ -9,26 +9,27 @@
 
 # Initialize the project
 
-Start the dev server for local development:
+Initialize local development environment:
 
 ```bash
-docker-compose up
+# Apply DB migrations
+docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py migrate
+
+# Create a superuser
+docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py createsuperuser
+
+# Start containers
+docker-compose -f docker-compose.dev.yml up
 ```
 
-Create a superuser to login to the admin:
-
+To generate migration scripts for new database changes run:
 ```bash
-docker-compose run --rm backend ./manage.py createsuperuser
-```
-
-For database migrations run:
-```bash
-docker-compose run --rm backend ./manage.py makemigrations
+docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py makemigrations
 ```
 
 To run tests:
 ```bash
-docker-compose run --rm backend ./manage.py test
+docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test
 ```
 
 
