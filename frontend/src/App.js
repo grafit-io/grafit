@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ArticleList from "./components/articleList";
-import ArticleDetail from "./components/articleDetail";
+import ArticleList from "./components/ArticleList";
+import ArticleDetail from "./components/ArticleDetail";
+import Login from "./components/login/Login"
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 
 
@@ -57,18 +59,36 @@ class App extends Component {
     return (
       <Router>
         <div className="container">
-          <Link to="/">
-            <h1 className="title">grafit.io</h1>
+          <Navbar inverse fixedTop>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">
+                  grafit.io
           </Link>
-          {this.state.articles && (
-            <Route exact path="/" render={() => (
-              <ArticleList articles={this.state.articles} />)} />
-          )}
-          {this.state.articles && (
-            <Route path="/articles/:articleId" render={({ match }) => {
-              return <ArticleDetail article={this.state.articles.find(a => a.id === parseInt(match.params.articleId))} />
-            }} />
-          )}
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav>
+              <NavItem eventKey={1} href="/">
+                Articles
+            </NavItem>
+              <NavItem eventKey={2} href="/login">
+                Login
+            </NavItem>
+            </Nav>
+          </Navbar>
+
+          <div className="contentwrap">
+            <Route path="/login" exact component={Login} />
+            {this.state.articles && (
+              <Route exact path="/" render={() => (
+                <ArticleList articles={this.state.articles} />)} />
+            )}
+            {this.state.articles && (
+              <Route path="/articles/:articleId" render={({ match }) => {
+                return <ArticleDetail article={this.state.articles.find(a => a.id === parseInt(match.params.articleId))} />
+              }} />
+            )}
+          </div>
         </div>
       </Router>
     );

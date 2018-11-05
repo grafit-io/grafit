@@ -8,7 +8,9 @@ class ArticleList extends Component {
         {this.props.articles.filter(article => article.text !== "").map(article => (
           <div key={article.id}>
             <hr />
-            <h2>{article.title}</h2>
+            <Link to={`/articles/${article.id}`}>
+              <h2>{article.title}</h2>
+            </Link>
             {article.related.map(article => (
               <Link to={`/articles/${article.id}`}>
                 <span className="badge badge-info" key={article.id}>
