@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Redirect } from "react-router-dom"
 import "./Login.css";
 
 export default class Login extends Component {
@@ -24,12 +25,19 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    // TODO auth via API
+    this.props.auth.userHasAuthenticated(true);
   }
 
   render() {
+    const redirect = this.props.auth.isAuthenticated
+    if (redirect) {
+      return <Redirect push to='/' />
+    }
+
     return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
+      < div className="Login" >
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl

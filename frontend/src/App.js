@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import ArticleList from "./components/ArticleList";
 import ArticleDetail from "./components/ArticleDetail";
 import Login from "./components/login/Login"
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import Nagivation from "./components/navigation/Navigation"
 import "./App.css";
 
 
@@ -19,11 +19,16 @@ const DEFAULT_QUERY = "articles/"
 
 class App extends Component {
   state = {
-    articles: []
+    isAuthenticated: false,
+    authToken: undefined,
+    articles: [],
+  }
+
+  userHasAuthenticated = authenticated => {
+    this.setState({ isAuthenticated: authenticated });
   }
 
   componentDidMount() {
-
     fetch(AUTH_API,
       {
         headers: {
@@ -56,34 +61,30 @@ class App extends Component {
   }
 
   render() {
+
+    const authProps = {
+      isAuthenticated: this.state.isAuthenticated,
+      authToken: this.state.authToken,
+      userHasAuthenticated: this.userHasAuthenticated,
+    }
+
     return (
       <Router>
         <div className="container">
-          <Navbar inverse fixedTop>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to="/">
-                  grafit.io
-          </Link>
-              </Navbar.Brand>
-            </Navbar.Header>
-            <Nav>
-              <NavItem eventKey={1} href="/">
-                Articles
-            </NavItem>
-              <NavItem eventKey={2} href="/login">
-                Login
-            </NavItem>
-            </Nav>
-          </Navbar>
+
+          <Nagivation auth={authProps} />
+
+          {!this.state.isAuthenticated && (
+            <Redirect push to='/login' />
+          )}
 
           <div className="contentwrap">
-            <Route path="/login" exact component={Login} />
-            {this.state.articles && (
+            <Route path="/login" render={() => <Login auth={authProps} />} />
+            {this.state.articles && this.state.isAuthenticated && (
               <Route exact path="/" render={() => (
                 <ArticleList articles={this.state.articles} />)} />
             )}
-            {this.state.articles && (
+            {this.state.articles && this.state.isAuthenticated && (
               <Route path="/articles/:articleId" render={({ match }) => {
                 return <ArticleDetail article={this.state.articles.find(a => a.id === parseInt(match.params.articleId))} />
               }} />
