@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Alert, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Redirect } from "react-router-dom"
+import { AuthService } from "../../services/AuthService"
 import "./Login.css";
 
 export default class Login extends Component {
@@ -8,13 +9,14 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: ""
+      username: "",
+      password: "",
+      alert: false,
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -25,8 +27,14 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    // TODO auth via API
-    this.props.auth.userHasAuthenticated(true);
+    AuthService.login(this.state.username, this.state.password)
+      .then(() => {
+        this.props.auth.userHasAuthenticated(true)
+      })
+      .catch(reason => {
+        console.log(reason)
+        this.setState({ alert: true })
+      })
   }
 
   render() {
@@ -38,12 +46,20 @@ export default class Login extends Component {
     return (
       < div className="Login" >
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
+          {this.state.alert && (
+            <Alert bsStyle="warning">
+              <h4>Invalid Credentials</h4>
+              <p>
+                Please verify your inputs.
+              </p>
+            </Alert>
+          )}
+          <FormGroup controlId="username" bsSize="large">
+            <ControlLabel>Username</ControlLabel>
             <FormControl
               autoFocus
-              type="email"
-              value={this.state.email}
+              type="input"
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </FormGroup>

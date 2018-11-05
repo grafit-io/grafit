@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { AuthService } from "../../services/AuthService"
 
 class Navigation extends Component {
 
     handleLogout = event => {
         this.props.auth.userHasAuthenticated(false)
+        AuthService.logout()
     }
 
     render() {
