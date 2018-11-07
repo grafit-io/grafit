@@ -18,6 +18,7 @@ gunicorn = "*"
 whitenoise = "*"
 "psycopg2-binary" = "*"
 django-cors-headers = "*"
+djangorestframework-timed-auth-token = "*"
 
 [requires]
 python_version = "3.6"

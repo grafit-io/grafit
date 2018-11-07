@@ -22,7 +22,10 @@ function getArticles() {
             }
         })
         .then(data => { return data })
-        .catch(error => console.log(error))
+        .catch(error => {
+            // TODO handle 403 => not logged in
+            console.log(error)
+        })
 }
 
 function getArticle(id) {
