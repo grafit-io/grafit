@@ -18,9 +18,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    if (AuthService.isLoggedIn()) {
-      this.setState({ isAuthenticated: true })
-    }
+    AuthService.isLoggedIn().then(loggedIn => this.setState({isAuthenticated: loggedIn}))
   }
 
   render() {

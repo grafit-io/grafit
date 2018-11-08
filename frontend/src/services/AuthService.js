@@ -1,4 +1,6 @@
-import { AUTH_API } from "../constants"
+import {API, AUTH_API} from "../constants"
+
+const JWT_LOCALSTOR_KEY = 'jwt';
 
 export const AuthService = {
     login,
@@ -15,7 +17,7 @@ function login(username, password) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ username: username, password: password })
+            body: JSON.stringify({username: username, password: password})
         })
         .then(response => {
             if (response.ok) {
@@ -24,25 +26,47 @@ function login(username, password) {
                 throw new Error('Wrong credentials')
             }
         })
-        .catch(reason => { throw reason })
+        .catch(reason => {
+            throw reason
+        })
         .then(data => {
             let token = data['token']
             console.log("Recieved JWT: " + token)
-            localStorage.setItem('jwt', token)
+            localStorage.setItem(JWT_LOCALSTOR_KEY, token)
         })
-        .catch(reason => { throw reason })
+        .catch(reason => {
+            throw reason
+        })
 
+}
+
+function isJWTValid(jwt) {
+    return fetch(API, {
+        headers: {
+            'Authorization': 'Token ' + jwt
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return true
+            } else {
+                return false
+            }
+        })
 }
 
 function logout() {
     // remove jwt from local storage to log user out
-    localStorage.removeItem('jwt');
+    localStorage.removeItem(JWT_LOCALSTOR_KEY);
 }
 
 function getJWT() {
-    return localStorage.getItem('jwt')
+    return localStorage.getItem(JWT_LOCALSTOR_KEY)
 }
 
 function isLoggedIn() {
-    return localStorage.getItem('jwt') !== null
+    if (getJWT() !== null) {
+        return isJWTValid(getJWT())
+    }
+    return Promise.resolve(false)
 }

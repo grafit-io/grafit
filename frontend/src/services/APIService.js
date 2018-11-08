@@ -1,5 +1,5 @@
-import { AuthService } from "./AuthService"
-import { API } from "../constants"
+import {AuthService} from "./AuthService"
+import {API} from "../constants"
 
 export const APIService = {
     getArticles,
@@ -21,7 +21,9 @@ function getArticles() {
                 throw new Error('Something went wrong ...');
             }
         })
-        .then(data => { return data })
+        .then(data => {
+            return data
+        })
         .catch(error => {
             // TODO handle 403 => not logged in
             console.log(error)
@@ -41,6 +43,8 @@ function getArticle(id) {
                 throw new Error('Something went wrong ...');
             }
         })
-        .then(data => { return data })
+        .then(data => {
+            return data
+        })
         .catch(error => console.log(error))
 }

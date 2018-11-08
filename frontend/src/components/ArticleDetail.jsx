@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { APIService } from "../services/APIService"
-import { AuthService } from "../services/AuthService"
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
+import {APIService} from "../services/APIService"
 
 class ArticleDetail extends Component {
 
@@ -10,11 +9,9 @@ class ArticleDetail extends Component {
     }
 
     loadArticle = articleId => {
-        if (AuthService.isLoggedIn()) {
-            APIService.getArticle(articleId).then(article => {
-                this.setState({ article: article })
-            })
-        }
+        APIService.getArticle(articleId).then(article => {
+            this.setState({article: article})
+        })
     }
 
     componentDidMount() {
@@ -34,7 +31,7 @@ class ArticleDetail extends Component {
             <div>
                 {this.state.article && (
                     <div>
-                        <hr />
+                        <hr/>
                         <h2>Detail View: {this.state.article.title}</h2>
                         {this.state.article.related.map(relatedArticle => (
                             <Link to={`/articles/${relatedArticle.id}`}>
