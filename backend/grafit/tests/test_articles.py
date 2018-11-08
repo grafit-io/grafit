@@ -1,5 +1,7 @@
 from django.test import TestCase
+
 from ..models import Article
+
 
 class ArticleTest(TestCase):
     def setUp(self):

@@ -1,5 +1,6 @@
-from .models import Article
 from .concept_extractor.extractor import TextblobTfIdfExtractStrategy
+from .models import Article
+
 
 class ConceptRunner:
     def generate_graph(self):
@@ -13,7 +14,7 @@ class ConceptRunner:
         tfidf_extractor = TextblobTfIdfExtractStrategy()
 
         for article in articles:
-            
+
             keywords = tfidf_extractor.extract_keyphrases(article.text)
 
             for keyword in keywords:

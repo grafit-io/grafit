@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include, re_path, reverse_lazy
-from rest_framework import routers
-from grafit import views
 from django.views.generic.base import RedirectView
+from grafit import views
+from rest_framework import routers
 from timed_auth_token.views import TimedAuthTokenCreateView
 
 router = routers.DefaultRouter()
