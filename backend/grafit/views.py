@@ -38,7 +38,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
+    queryset = Article.objects.order_by('-updated_at')
     serializer_class = ArticleSerializer
 
 

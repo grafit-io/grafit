@@ -11,6 +11,6 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title',)
-    ordering = ('id',)
+    list_display = ('id', 'title', 'updated_at', 'created_at',)
+    ordering = ('updated_at',)
     pass
