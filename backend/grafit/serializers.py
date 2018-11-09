@@ -36,7 +36,7 @@ class SubArticleSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
-    related = SubArticleSerializer(many=True)
+    related = SubArticleSerializer(required=False, many=True)
 
     class Meta:
         model = Article
