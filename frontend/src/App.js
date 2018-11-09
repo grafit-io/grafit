@@ -11,6 +11,7 @@ import "./App.css";
 class App extends Component {
   state = {
     isAuthenticated: false,
+    finishedLoading: false,
   }
 
   userHasAuthenticated = authenticated => {
@@ -18,7 +19,10 @@ class App extends Component {
   }
 
   componentWillMount() {
-    AuthService.isLoggedIn().then(loggedIn => this.setState({isAuthenticated: loggedIn}))
+    AuthService.isLoggedIn().then(loggedIn => this.setState({
+      finishedLoading: true,
+      isAuthenticated: loggedIn,
+    }))
   }
 
   render() {
@@ -36,7 +40,7 @@ class App extends Component {
           <div className="contentwrap">
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
-              {!this.state.isAuthenticated && (
+              {this.state.finishedLoading && !this.state.isAuthenticated && (
                 <Redirect push to='/login' />
               )}
               <Route exact path="/" component={ArticleList} />
