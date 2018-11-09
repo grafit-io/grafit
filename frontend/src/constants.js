@@ -5,5 +5,8 @@ if (window.location.hostname === "localhost" || window.location.hostname === "12
 }
 
 export const AUTH_API = BASE_URL + 'api-token-auth/'
-
 export const API = BASE_URL + 'api/v1/'
+
+export const JWT_LOCALSTOR_KEY = 'jwt';
+
+export const ARTICLE_ENDPOINT = "articles/"

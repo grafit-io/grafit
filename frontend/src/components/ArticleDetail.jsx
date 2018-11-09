@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { APIService } from "../services/APIService"
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Button } from "react-bootstrap"
+import { Alert, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from "react-bootstrap"
 
 class ArticleDetail extends Component {
 
     state = {
         article: undefined,
         edit: false,
+        alertSuccess: false,
     }
 
     loadArticle = articleId => {
@@ -21,7 +22,11 @@ class ArticleDetail extends Component {
     }
 
     handleSubmit = () => {
-        // TODO
+        APIService.updateArticle(this.props.match.params.articleId, this.state.article.title, this.state.article.text)
+            .then(() => {
+                this.setState({ alertSuccess: true, edit: false })
+            })
+            .catch(error => console.log(error))
     }
 
     handleChange = evt => {
@@ -87,7 +92,7 @@ class ArticleDetail extends Component {
                                         rows={14}
                                     />
                                 </FormGroup>
-                                <Button className="pull-right" disabled={disableSubmit} onClick={this.handleSubmit} bsStyle="success" pullRight>Save</Button>
+                                <Button className="pull-right" disabled={disableSubmit} onClick={this.handleSubmit} bsStyle="success">Save</Button>
                             </form>
                         </div>
                     )}
@@ -95,10 +100,15 @@ class ArticleDetail extends Component {
             )
         } else {
             return (
-                <Fragment>
+                <div>
+                    <hr />
+                    {this.state.alertSuccess && (
+                        <Alert bsStyle="success">
+                            Changes are Saved
+                      </Alert>
+                    )}
                     {this.state.article && (
                         <div>
-                            <hr />
                             <h2>Detail View: {this.state.article.title}</h2>
                             <Button bsStyle="primary" onClick={this.handleClick}>Edit</Button><br />
                             {this.state.article.related.map(relatedArticle => (
@@ -111,7 +121,7 @@ class ArticleDetail extends Component {
                             <p>{this.state.article.text}</p>
                         </div>
                     )}
-                </Fragment>
+                </div>
             )
         }
     }

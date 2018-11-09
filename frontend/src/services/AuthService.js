@@ -1,6 +1,5 @@
-import {API, AUTH_API} from "../constants"
-
-const JWT_LOCALSTOR_KEY = 'jwt';
+import { AUTH_API, JWT_LOCALSTOR_KEY } from "../constants"
+import { APIService } from "./APIService"
 
 export const AuthService = {
     login,
@@ -17,7 +16,7 @@ function login(username, password) {
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({username: username, password: password})
+            body: JSON.stringify({ username: username, password: password })
         })
         .then(response => {
             if (response.ok) {
@@ -37,22 +36,12 @@ function login(username, password) {
         .catch(reason => {
             throw reason
         })
-
 }
 
 function isJWTValid(jwt) {
-    return fetch(API, {
-        headers: {
-            'Authorization': 'Token ' + jwt
-        }
-    })
-        .then(response => {
-            if (response.ok) {
-                return true
-            } else {
-                return false
-            }
-        })
+    return APIService.callGetAPI("")
+        .then(() => { return true })
+        .catch(() => { return false })
 }
 
 function logout() {
