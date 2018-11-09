@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Alert, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Redirect } from "react-router-dom"
-import { AuthService } from "../../services/AuthService"
+import {
+  Alert,
+  Button,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Image
+} from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+import { AuthService } from "../../services/AuthService";
 import "./Login.css";
 
 export default class Login extends Component {
@@ -11,7 +18,7 @@ export default class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      alert: false,
+      alert: false
     };
   }
 
@@ -23,35 +30,35 @@ export default class Login extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
     AuthService.login(this.state.username, this.state.password)
       .then(() => {
-        this.props.auth.userHasAuthenticated(true)
+        this.props.auth.userHasAuthenticated(true);
       })
       .catch(reason => {
-        console.log(reason)
-        this.setState({ alert: true })
-      })
-  }
+        console.log(reason);
+        this.setState({ alert: true });
+      });
+  };
 
   render() {
-    const redirect = this.props.auth.isAuthenticated
+    const redirect = this.props.auth.isAuthenticated;
     if (redirect) {
-      return <Redirect push to='/' />
+      return <Redirect push to="/" />;
     }
 
     return (
-      < div className="Login" >
+      <div className="Login">
         <form onSubmit={this.handleSubmit.bind(this)}>
+          <Image src="logo_transparent.svg" />
+
           {this.state.alert && (
             <Alert bsStyle="warning">
               <h4>Invalid Credentials</h4>
-              <p>
-                Please verify your inputs.
-              </p>
+              <p>Please verify your inputs.</p>
             </Alert>
           )}
           <FormGroup controlId="username" bsSize="large">

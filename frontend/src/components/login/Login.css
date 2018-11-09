@@ -6,4 +6,8 @@
         margin: 0 auto;
         max-width: 320px;
     }
+
+    .Login img{
+        width: 100%;
+    }
 }
