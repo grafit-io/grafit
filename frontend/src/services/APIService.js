@@ -7,6 +7,7 @@ export const APIService = {
     getArticles,
     getArticle,
     updateArticle,
+    createArticle,
 };
 
 function callGetAPI(query) {
@@ -25,7 +26,6 @@ function callGetAPI(query) {
     })
 }
 
-// eslint-disable-next-line
 function callPostAPI(apiEndpoint, object) {
     return fetch(API + apiEndpoint,
         {
@@ -79,9 +79,17 @@ function getArticle(id) {
 }
 
 function updateArticle(id, title, text) {
-    let object = {
+    let article = {
         title: title,
         text: text
     }
-    return callPutAPI(ARTICLE_ENDPOINT + id + "/", object)
+    return callPutAPI(ARTICLE_ENDPOINT + id + "/", article)
+}
+
+function createArticle(title, text) {
+    let article = {
+        title: title,
+        text: text
+    }
+    return callPostAPI(ARTICLE_ENDPOINT, article)
 }

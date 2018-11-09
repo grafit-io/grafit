@@ -6,8 +6,13 @@ import { Alert, FormGroup, ControlLabel, FormControl, HelpBlock, Button } from "
 class ArticleDetail extends Component {
 
     state = {
-        article: undefined,
+        article: {
+            title: "",
+            text: "",
+            related: []
+        },
         edit: false,
+        new: false,
         alertSuccess: false,
     }
 
@@ -21,12 +26,21 @@ class ArticleDetail extends Component {
         this.setState({ edit: true })
     }
 
-    handleSubmit = () => {
+    handlePostSubmit = () => {
+        APIService.createArticle(this.state.article.title, this.state.article.text)
+            .then(article => {
+                this.props.history.push('/articles/' + article.id)
+                this.setState({ new: false, alertSuccess: true })
+            })
+            .catch(console.log)
+    }
+
+    handlePutSubmit = () => {
         APIService.updateArticle(this.props.match.params.articleId, this.state.article.title, this.state.article.text)
             .then(() => {
                 this.setState({ alertSuccess: true, edit: false })
             })
-            .catch(error => console.log(error))
+            .catch(console.log)
     }
 
     handleChange = evt => {
@@ -36,10 +50,7 @@ class ArticleDetail extends Component {
     }
 
     getValidationState = () => {
-        const titleLength = this.state.article.title.length
-        const textLength = this.state.article.text.length
-
-        if (titleLength > 3 && textLength > 0) {
+        if (this.state.article.title.length > 3) {
             return 'success'
         } else {
             return 'error'
@@ -47,7 +58,14 @@ class ArticleDetail extends Component {
     }
 
     componentDidMount() {
-        this.loadArticle(this.props.match.params.articleId)
+        if (this.props.location.state) {
+            const isNew = this.props.location.state.new
+            if (isNew) {
+                this.setState({ new: true })
+            }
+        } else {
+            this.loadArticle(this.props.match.params.articleId)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -59,8 +77,8 @@ class ArticleDetail extends Component {
     }
 
     render() {
+        const disableSubmit = this.getValidationState() !== 'success'
         if (this.state.edit) {
-            const disableSubmit = this.getValidationState() !== 'success'
             return (
                 <Fragment>
                     {this.state.article && (
@@ -92,10 +110,46 @@ class ArticleDetail extends Component {
                                         rows={14}
                                     />
                                 </FormGroup>
-                                <Button className="pull-right" disabled={disableSubmit} onClick={this.handleSubmit} bsStyle="success">Save</Button>
+                                <Button className="pull-right" disabled={disableSubmit} onClick={this.handlePutSubmit} bsStyle="success">Save</Button>
                             </form>
                         </div>
                     )}
+                </Fragment>
+            )
+        } else if (this.state.new) {
+            return (
+                <Fragment>
+                    <div>
+                        <hr />
+                        <h2>New Article: {this.state.article.title}</h2>
+                        <form>
+                            <FormGroup
+                                controlId="articleEditForm"
+                                validationState={this.getValidationState()}>
+                                <ControlLabel>Article Title</ControlLabel>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.article.title}
+                                    placeholder="Enter Title"
+                                    onChange={this.handleChange}
+                                    name="title"
+                                />
+                                <FormControl.Feedback />
+                                <HelpBlock>Title has to be at least 4 characters.</HelpBlock>
+
+                                <ControlLabel>Article Text</ControlLabel>
+                                <FormControl
+                                    componentClass="textarea"
+                                    placeholder="Enter Text"
+                                    value={this.state.article.text}
+                                    onChange={this.handleChange}
+                                    name="text"
+                                    rows={14}
+                                />
+                            </FormGroup>
+                            <Button className="pull-right" disabled={disableSubmit} onClick={this.handlePostSubmit} bsStyle="success">Save</Button>
+                        </form>
+                    </div>
                 </Fragment>
             )
         } else {
@@ -104,7 +158,7 @@ class ArticleDetail extends Component {
                     <hr />
                     {this.state.alertSuccess && (
                         <Alert bsStyle="success">
-                            Changes are Saved
+                            Saved
                       </Alert>
                     )}
                     {this.state.article && (
