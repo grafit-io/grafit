@@ -117,6 +117,7 @@ function createUser(username, password, firstname, lastname, email) {
   };
 
   return fetch(API + USER_ENDPOINT, {
+    credentials: "omit",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
