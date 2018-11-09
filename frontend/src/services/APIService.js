@@ -1,5 +1,5 @@
 import { AuthService } from "./AuthService";
-import { API, ARTICLE_ENDPOINT } from "../constants";
+import { API, ARTICLE_ENDPOINT, USER_ENDPOINT } from "../constants";
 
 export const APIService = {
   callGetAPI,
@@ -7,7 +7,8 @@ export const APIService = {
   getArticle,
   updateArticle,
   createArticle,
-  deleteArticle
+  deleteArticle,
+  createUser
 };
 
 function callGetAPI(query) {
@@ -87,7 +88,7 @@ function getArticle(id) {
 }
 
 function updateArticle(id, title, text) {
-  let article = {
+  const article = {
     title: title,
     text: text
   };
@@ -95,7 +96,7 @@ function updateArticle(id, title, text) {
 }
 
 function createArticle(title, text) {
-  let article = {
+  const article = {
     title: title,
     text: text
   };
@@ -104,4 +105,29 @@ function createArticle(title, text) {
 
 function deleteArticle(id) {
   return callDeleteAPI(ARTICLE_ENDPOINT + id);
+}
+
+function createUser(username, password, firstname, lastname, email) {
+  const user = {
+    username: username,
+    password: password,
+    first_name: firstname,
+    last_name: lastname,
+    email: email
+  };
+
+  return fetch(API + USER_ENDPOINT, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(user)
+  }).then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Could not send post");
+    }
+  });
 }

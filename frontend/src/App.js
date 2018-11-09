@@ -11,6 +11,7 @@ import Login from "./components/login/Login";
 import Nagivation from "./components/navigation/Navigation";
 import { AuthService } from "./services/AuthService";
 import "./App.css";
+import Register from "./components/Register";
 
 class App extends Component {
   state = {
@@ -45,6 +46,7 @@ class App extends Component {
           <div className="contentwrap">
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
+              <Route path="/signup" component={Register} />
               {this.state.finishedLoading && !this.state.isAuthenticated && (
                 <Redirect push to="/login" />
               )}
