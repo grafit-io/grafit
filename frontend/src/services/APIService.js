@@ -13,6 +13,7 @@ export const APIService = {
 
 function callGetAPI(query) {
   return fetch(API + query, {
+    credentials: "omit",
     headers: {
       Authorization: "Token " + AuthService.getJWT()
     }
@@ -29,6 +30,7 @@ function callGetAPI(query) {
 
 function callPostAPI(apiEndpoint, object) {
   return fetch(API + apiEndpoint, {
+    credentials: "omit",
     headers: {
       Authorization: "Token " + AuthService.getJWT(),
       Accept: "application/json",
@@ -47,6 +49,7 @@ function callPostAPI(apiEndpoint, object) {
 
 function callPutAPI(apiEndpoint, object) {
   return fetch(API + apiEndpoint, {
+    credentials: "omit",
     headers: {
       Authorization: "Token " + AuthService.getJWT(),
       Accept: "application/json",
@@ -66,6 +69,7 @@ function callPutAPI(apiEndpoint, object) {
 
 function callDeleteAPI(apiEndpoint) {
   return fetch(API + apiEndpoint, {
+    credentials: "omit",
     headers: {
       Authorization: "Token " + AuthService.getJWT()
     },
