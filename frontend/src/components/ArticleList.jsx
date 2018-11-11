@@ -40,7 +40,6 @@ class ArticleList extends Component {
     let deletedId = this.state.deletedId;
     return (
       <div>
-        <hr />
         {deletedId && (
           <Alert bsStyle="success">Deleted Article {deletedId}</Alert>
         )}
