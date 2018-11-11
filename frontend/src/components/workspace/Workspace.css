@@ -1,0 +1,47 @@
+#sidebar {
+  width: inherit;
+  min-width: 80px;
+  max-width: 80px;
+  background-color: #f2f2f2;
+  border-right: 1px solid #dcdcdc;
+  float: left;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+#sidebar button {
+  display: inline-block;
+  width: 52px;
+  height: 52px;
+  font-weight: 900;
+  margin-top: 20px;
+  background-color: #524179;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    width: calc(100% + 80px);
+  }
+
+  .row-offcanvas-left {
+    left: -80px;
+  }
+
+  .row-offcanvas-left.active {
+    left: 0;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+  }
+}

@@ -9,6 +9,8 @@ import ArticleList from "./components/ArticleList";
 import ArticleDetail from "./components/ArticleDetail";
 import Login from "./components/login/Login";
 import Nagivation from "./components/navigation/Navigation";
+import Workspace from "./components/workspace/Workspace";
+import WorkspaceToggle from "./components/workspace/WorkspaceToggle";
 import { AuthService } from "./services/AuthService";
 import "./App.css";
 import Register from "./components/Register";
@@ -40,10 +42,13 @@ class App extends Component {
 
     return (
       <Router>
-        <div className="container">
+        <div className="row-offcanvas row-offcanvas-left">
           <Nagivation auth={authProps} />
 
-          <div className="contentwrap">
+          <Workspace auth={authProps} />
+
+          <div className="content">
+            <WorkspaceToggle auth={authProps} />
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
               <Route path="/signup" component={Register} />
