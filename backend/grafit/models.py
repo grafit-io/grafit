@@ -1,9 +1,10 @@
 import uuid
+from datetime import datetime
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship
+from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
 
 
 @python_2_unicode_compatible
@@ -33,7 +34,14 @@ class Workspace(models.Model):
     users = models.ManyToManyField(User)
 
 
+class ArticleRel(StructuredRel):
+    created_at = DateTimeProperty(
+        default=lambda: datetime.now()
+    )
+    tf_idf = FloatProperty()
+
+
 class GraphArticle(StructuredNode):
     uid = UniqueIdProperty()
     name = StringProperty()
-    related = Relationship('GraphArticle', 'RELATED')
+    related = Relationship('GraphArticle', 'RELATED', model=ArticleRel)

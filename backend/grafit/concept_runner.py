@@ -54,6 +54,8 @@ class ConceptRunner:
                 related_article_node.save()
                 logger.info(
                     f"Set {article_node.name} as related to {related_article_node.name}")
-                article_node.related.connect(related_article_node)
+
+                article_node.related.connect(
+                    related_article_node, {'tf_idf': keyword['tf-idf']})
 
         return "success"
