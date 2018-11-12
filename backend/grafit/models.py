@@ -23,3 +23,10 @@ class Article(models.Model):
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
+
+
+@python_2_unicode_compatible
+class Workspace(models.Model):
+    name = models.CharField(max_length=250)
+    initials = models.CharField(max_length=2)
+    users = models.ManyToManyField(User)

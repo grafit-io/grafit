@@ -10,6 +10,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'users', views.UserCreateViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'articles', views.ArticleViewSet)
+router.register(r'workspaces', views.WorkspaceViewSet, basename="workspace")
 
 urlpatterns = [
     path('api-token-auth/', TimedAuthTokenCreateView.as_view()),
@@ -20,5 +21,6 @@ urlpatterns = [
 
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
-    re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)),
+    re_path(r'^$', RedirectView.as_view(
+        url=reverse_lazy('api-root'), permanent=False)),
 ]

@@ -1,13 +1,14 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
 
-from .models import User, Article
+from .models import User, Article, Workspace
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups', 'first_name', 'last_name')
+        fields = ('url', 'username', 'email',
+                  'groups', 'first_name', 'last_name')
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -19,7 +20,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'password', 'first_name', 'last_name', 'email',)
+        fields = ('url', 'username', 'password',
+                  'first_name', 'last_name', 'email',)
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -40,4 +42,11 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'url', 'title', 'text', 'related', 'created_at', 'updated_at')
+        fields = ('id', 'url', 'title', 'text',
+                  'related', 'created_at', 'updated_at')
+
+
+class WorkspaceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Workspace
+        fields = ('id', 'url', 'name', 'initials')

@@ -1,12 +1,12 @@
 from django.contrib.auth.models import Group
-from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer
+from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .concept_runner import ConceptRunner
-from .models import User, Article
+from .models import User, Article, Workspace
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -40,6 +40,19 @@ class GroupViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.order_by('-updated_at')
     serializer_class = ArticleSerializer
+
+
+class WorkspaceViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
+                       viewsets.GenericViewSet):
+    serializer_class = WorkspaceSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the workspaces
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Workspace.objects.filter(users=user)
 
 
 class ConceptRunnerAPI(APIView):
