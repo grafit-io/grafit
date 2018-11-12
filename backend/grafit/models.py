@@ -34,5 +34,5 @@ class Workspace(models.Model):
 
 
 class GraphArticle(StructuredNode):
-    id = UniqueIdProperty()
+    uid = UniqueIdProperty()
     name = StringProperty()
