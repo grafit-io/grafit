@@ -3,7 +3,7 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from neomodel import StructuredNode, StringProperty, UniqueIdProperty
+from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship
 
 
 @python_2_unicode_compatible
@@ -36,3 +36,4 @@ class Workspace(models.Model):
 class GraphArticle(StructuredNode):
     uid = UniqueIdProperty()
     name = StringProperty()
+    related = Relationship('GraphArticle', 'RELATED')
