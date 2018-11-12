@@ -72,13 +72,13 @@ class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
 
         tbs = []
         for article in articles:
-            tbs.append(tb(article.title + " " + article.text))
+            tbs.append(tb(article.title.lower() + " " + article.text.lower()))
 
         return tbs
 
     def extract_keyphrases(self, text: str, top_n_words=5):
         result = []
-        blob = tb(text)
+        blob = tb(text.lower())
 
         scores = {word: self.tfidf(word, blob, self.corpus)
                   for word in blob.words}
