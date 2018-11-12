@@ -4,9 +4,17 @@ services:
   db:
     image: postgres
 
+  neo4j:
+    image: neo4j
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: "neo4j/test"
+
   backend:
     image: grafit-backend
-    build: 
+    build:
       context: ./backend
       target: base
     ports:
@@ -16,6 +24,7 @@ services:
       - ./backend:/code
     depends_on:
       - db
+      - neo4j
 
   frontend:
     image: grafit-frontend

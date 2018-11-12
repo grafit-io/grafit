@@ -1,3 +1,4 @@
+from neomodel import config
 """
 Django settings for backend project.
 
@@ -25,6 +26,8 @@ SECRET_KEY = '0jhlvrzdzpugqw_zrdujuvz9(i&nwsh$#(lmgacnykiw6s1f=w'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+
+config.DATABASE_URL = 'bolt://neo4j:test@neo4j:7687'
 
 # Application definition
 

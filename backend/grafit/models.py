@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from neomodel import StructuredNode, StringProperty, UniqueIdProperty
 
 
 @python_2_unicode_compatible
@@ -30,3 +31,8 @@ class Workspace(models.Model):
     name = models.CharField(max_length=250)
     initials = models.CharField(max_length=2)
     users = models.ManyToManyField(User)
+
+
+class GraphArticle(StructuredNode):
+    id = UniqueIdProperty()
+    name = StringProperty()
