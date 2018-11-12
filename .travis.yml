@@ -21,7 +21,7 @@ before_install:
 
 script:
   - docker-compose -f docker-compose.dev.yml build
-  - docker-compose -f docker-compose.dev.yml run --rm backend bash -c "python wait_for_postgres.py && ./manage.py test --no-input"
+  - docker-compose -f docker-compose.dev.yml run --rm backend bash -c "python wait_for_postgres.py && python wait_for_neo4j.py && ./manage.py test --no-input"
   - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test
   - fossa
   - docker-compose rm -f
