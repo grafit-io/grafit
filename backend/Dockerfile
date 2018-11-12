@@ -25,6 +25,8 @@ CMD python wait_for_postgres.py && \
 FROM base as prod
 CMD python wait_for_postgres.py && \
     python wait_for_neo4j.py && \
+    ./manage.py clear_neo4j && \
+    ./manage.py install_labels && \
     ./manage.py migrate && \
     ./manage.py collectstatic --noinput && \
     gunicorn --bind 0.0.0.0:8000 --access-logfile - backend.wsgi:application

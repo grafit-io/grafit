@@ -4,6 +4,11 @@ services:
   db:
     image: postgres
 
+  neo4j:
+    image: neo4j
+    environment:
+      NEO4J_AUTH: "neo4j/test"
+
   backend:
     image: grafitio/grafit-backend
     ports:
@@ -11,6 +16,7 @@ services:
     restart: always
     depends_on:
       - db
+      - neo4j
 
   frontend:
     image: grafitio/grafit-frontend
