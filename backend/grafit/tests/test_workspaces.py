@@ -28,7 +28,6 @@ class WorkspaceTest(APITestCase):
         self.response = self.client.get(
             reverse('workspace-list'),
             format="json")
-        print(self.response.data)
 
         self.assertEqual(len(self.response.data), 1)
         self.assertEqual(self.response.data[0]['initials'], 'TE')
