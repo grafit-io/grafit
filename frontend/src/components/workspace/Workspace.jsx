@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import "./Workspace.css";
 import { Button } from "react-bootstrap";
+import { APIService } from "../../services/APIService";
 
 export default class Workspace extends Component {
   state = {
-    workspaces: [
-      {
-        id: 1,
-        initials: "PR",
-        name: "Public Relations"
-      },
-      {
-        id: 2,
-        initials: "SW",
-        name: "Software Engineering"
-      }
-    ]
+    workspaces: []
   };
+
+  loadWorkspaces = () => {
+    APIService.getWorkspaces()
+      .then(workspaces => {
+        this.setState({ workspaces: workspaces });
+      })
+      .catch(console.log);
+  };
+
+  componentDidMount() {
+    this.loadWorkspaces();
+  }
 
   render() {
     if (

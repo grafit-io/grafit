@@ -15,3 +15,4 @@ export const JWT_LOCALSTOR_KEY = "jwt";
 
 export const ARTICLE_ENDPOINT = "articles/";
 export const USER_ENDPOINT = "users/";
+export const WORKSPACE_ENDPOINT = "workspaces/";
