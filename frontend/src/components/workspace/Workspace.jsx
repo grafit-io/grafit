@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Workspace.css";
+import { Button } from "react-bootstrap";
 
 export default class Workspace extends Component {
   state = {
@@ -33,12 +34,9 @@ export default class Workspace extends Component {
               .filter(workspace => workspace.initials !== "")
               .map(workspace => (
                 <li key={workspace.id}>
-                  <button
-                    title={workspace.name}
-                    className="btn-primary-invert btn btn-primary btn-block"
-                  >
+                  <Button title={workspace.name} bsSize="primary" block>
                     {workspace.initials}
-                  </button>
+                  </Button>
                 </li>
               ))}
         </ul>

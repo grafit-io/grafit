@@ -44,7 +44,7 @@ class ArticleList extends Component {
           <Alert bsStyle="success">Deleted Article {deletedId}</Alert>
         )}
         <Link to={{ pathname: "/articles/new", state: { new: true } }}>
-          <Button bsStyle="primary" onClick={this.handleClick}>
+          <Button bsStyle="default" onClick={this.handleClick}>
             Create New Article
           </Button>
         </Link>
