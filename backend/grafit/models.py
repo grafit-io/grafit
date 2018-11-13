@@ -3,11 +3,9 @@ from datetime import datetime
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
 
 
-@python_2_unicode_compatible
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -15,7 +13,6 @@ class User(AbstractUser):
         return self.username
 
 
-@python_2_unicode_compatible
 class Article(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField(blank=True)
@@ -27,7 +24,6 @@ class Article(models.Model):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
 
 
-@python_2_unicode_compatible
 class Workspace(models.Model):
     name = models.CharField(max_length=250)
     initials = models.CharField(max_length=2)
