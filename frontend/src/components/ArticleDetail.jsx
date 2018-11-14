@@ -57,7 +57,8 @@ class ArticleDetail extends Component {
     APIService.updateArticle(
       this.props.match.params.articleId,
       this.state.article.title,
-      this.state.article.text
+      this.state.article.text,
+      this.props.currentWorkspace
     )
       .then(() => {
         this.setState({ alertSuccess: true, edit: false });

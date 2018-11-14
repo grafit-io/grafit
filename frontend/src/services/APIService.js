@@ -97,10 +97,11 @@ function getArticle(id) {
   return callGetAPI(ARTICLE_ENDPOINT + id).catch(error => console.log(error));
 }
 
-function updateArticle(id, title, text) {
+function updateArticle(id, title, text, workspace) {
   const article = {
     title: title,
-    text: text
+    text: text,
+    workspace: workspace
   };
   return callPutAPI(ARTICLE_ENDPOINT + id + "/", article);
 }
