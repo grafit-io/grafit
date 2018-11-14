@@ -13,21 +13,22 @@ class User(AbstractUser):
         return self.username
 
 
+class Workspace(models.Model):
+    name = models.CharField(max_length=250)
+    initials = models.CharField(max_length=2)
+    users = models.ManyToManyField(User)
+
+
 class Article(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField(blank=True)
     related = models.ManyToManyField("self", blank=True)
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
-
-
-class Workspace(models.Model):
-    name = models.CharField(max_length=250)
-    initials = models.CharField(max_length=2)
-    users = models.ManyToManyField(User)
 
 
 class ArticleRel(StructuredRel):
