@@ -37,7 +37,7 @@ class ArticleList extends Component {
   }
 
   render() {
-    let deletedId = this.state.deletedId;
+    const deletedId = this.state.deletedId;
     return (
       <div>
         {deletedId && (
@@ -51,7 +51,11 @@ class ArticleList extends Component {
         <br />
         {this.state.articles &&
           this.state.articles
-            .filter(article => article.text !== "")
+            .filter(
+              article =>
+                article.text !== "" &&
+                article.workspace === this.props.currentWorkspace
+            )
             .map(article => (
               <div key={article.id}>
                 <Link to={`/articles/${article.id}`}>

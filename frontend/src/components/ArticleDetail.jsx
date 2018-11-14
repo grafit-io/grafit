@@ -41,7 +41,11 @@ class ArticleDetail extends Component {
   };
 
   handlePostSubmit = () => {
-    APIService.createArticle(this.state.article.title, this.state.article.text)
+    APIService.createArticle(
+      this.state.article.title,
+      this.state.article.text,
+      this.props.currentWorkspace
+    )
       .then(article => {
         this.props.history.push("/articles/" + article.id);
         this.setState({ new: false, alertSuccess: true });

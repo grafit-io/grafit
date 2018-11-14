@@ -37,16 +37,16 @@ class SubArticleSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'id', 'title')
 
 
-class ArticleSerializer(serializers.HyperlinkedModelSerializer):
+class WorkspaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workspace
+        fields = ('id', 'url', 'name', 'initials')
+
+
+class ArticleSerializer(serializers.ModelSerializer):
     related = SubArticleSerializer(required=False, many=True)
 
     class Meta:
         model = Article
         fields = ('id', 'url', 'title', 'text',
-                  'related', 'created_at', 'updated_at')
-
-
-class WorkspaceSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Workspace
-        fields = ('id', 'url', 'name', 'initials')
+                  'related', 'workspace', 'created_at', 'updated_at')

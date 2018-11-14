@@ -18,7 +18,12 @@ import Register from "./components/Register";
 class App extends Component {
   state = {
     isAuthenticated: false,
-    finishedLoading: false
+    finishedLoading: false,
+    currentWorkspace: undefined
+  };
+
+  handleWorkspaceChange = workspace => {
+    this.setState({ currentWorkspace: workspace });
   };
 
   userHasAuthenticated = authenticated => {
@@ -45,7 +50,10 @@ class App extends Component {
         <div className="row-offcanvas row-offcanvas-left">
           <Nagivation auth={authProps} />
 
-          <Workspace auth={authProps} />
+          <Workspace
+            auth={authProps}
+            changeWorkspace={this.handleWorkspaceChange}
+          />
 
           <div className="content">
             <WorkspaceToggle auth={authProps} />
@@ -55,11 +63,25 @@ class App extends Component {
               {this.state.finishedLoading && !this.state.isAuthenticated && (
                 <Redirect push to="/login" />
               )}
-              <Route exact path="/" component={ArticleList} />
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <ArticleList
+                    {...props}
+                    currentWorkspace={this.state.currentWorkspace}
+                  />
+                )}
+              />
               <Route
                 exact
                 path="/articles/:articleId"
-                component={ArticleDetail}
+                render={props => (
+                  <ArticleDetail
+                    {...props}
+                    currentWorkspace={this.state.currentWorkspace}
+                  />
+                )}
               />
               )}
             </Switch>

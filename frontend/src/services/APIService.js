@@ -1,5 +1,10 @@
 import { AuthService } from "./AuthService";
-import { API, ARTICLE_ENDPOINT, USER_ENDPOINT, WORKSPACE_ENDPOINT } from "../constants";
+import {
+  API,
+  ARTICLE_ENDPOINT,
+  USER_ENDPOINT,
+  WORKSPACE_ENDPOINT
+} from "../constants";
 
 export const APIService = {
   callGetAPI,
@@ -100,10 +105,11 @@ function updateArticle(id, title, text) {
   return callPutAPI(ARTICLE_ENDPOINT + id + "/", article);
 }
 
-function createArticle(title, text) {
+function createArticle(title, text, workspace) {
   const article = {
     title: title,
-    text: text
+    text: text,
+    workspace: workspace
   };
   return callPostAPI(ARTICLE_ENDPOINT, article);
 }
