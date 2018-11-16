@@ -20,6 +20,7 @@ whitenoise = "*"
 django-cors-headers = "*"
 djangorestframework-timed-auth-token = "*"
 neomodel = "==3.2.9"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
