@@ -60,8 +60,8 @@ class ArticleDetail extends Component {
       this.state.article.text,
       this.props.currentWorkspace
     )
-      .then(() => {
-        this.setState({ alertSuccess: true, edit: false });
+      .then(article => {
+        this.setState({ article: article, alertSuccess: true, edit: false });
       })
       .catch(console.log);
   };

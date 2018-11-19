@@ -1,7 +1,7 @@
 import time
 from django.contrib.auth.models import Group
 from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -70,6 +70,12 @@ class GraphAPI(APIView):
 
 class ConceptRunnerAPI(APIView):
     def get(self, request, format=None):
-        runner = ConceptRunner()
-        response = runner.generate_graph()
-        return Response(response)
+        articleId = int(request.query_params.get('id'))
+        try:
+            if articleId:
+                ConceptRunner.generate_concepts_for_article(articleId)
+            else:
+                ConceptRunner.generate_graph()
+            return Response(status.HTTP_200_OK)
+        except:
+            return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
