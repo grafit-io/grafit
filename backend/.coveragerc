@@ -1,0 +1,7 @@
+[run]
+source = backend,grafit
+omit =
+    */tests/*
+    */site-packages/*
+    */migrations/*
+    *wsgi.py
