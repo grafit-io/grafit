@@ -1,5 +1,6 @@
 from rest_framework.test import force_authenticate, APITestCase, APIClient
 from django.urls import reverse
+from rest_framework import status
 
 from ..models import Article, Workspace, User
 
@@ -11,7 +12,6 @@ class ArticleTest(APITestCase):
         workspace.save()
         workspace.users.add(test_user)
 
-        Article.objects.all().delete()
         Article.objects.create(title="TestTitle", text="TestText", workspace=workspace)
 
         self.client = APIClient()
@@ -23,6 +23,57 @@ class ArticleTest(APITestCase):
             reverse('article-list'),
             format="json")
 
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), Article.objects.all().count())
         self.assertEqual(response.data[0]['title'], "TestTitle")
         self.assertEqual(response.data[0]['text'], "TestText")
+
+    def test_article_create(self):
+        url = reverse('article-list')
+        data = {
+            'title': 'New Article Title',
+            'text': 'Test test test test',
+            'workspace': Workspace.objects.get(name="Testworkspace").id
+        }
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Article.objects.get(title='New Article Title').title, 'New Article Title')
+        self.assertEqual(Article.objects.get(title='New Article Title').text, 'Test test test test')
+
+    def test_article_create_notext(self):
+        numberOfArticles = Article.objects.all().count()
+
+        url = reverse('article-list')
+        data = {
+            'title': 'New Article Title',
+            'workspace': Workspace.objects.get(name="Testworkspace").id
+        }
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Article.objects.count(), numberOfArticles + 1)
+        self.assertEqual(Article.objects.get(title="New Article Title").title, 'New Article Title')
+
+    def test_update_article(self):
+        numberOfArticles = Article.objects.all().count()
+        testArticleId = Article.objects.get(title="TestTitle").id
+
+        data = {
+            'title': 'Test123',
+            'text': '',
+            'workspace': Workspace.objects.get(name="Testworkspace").id
+        }
+        response = self.client.put(reverse('article-detail', args=[testArticleId]), data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Article.objects.count(), numberOfArticles)
+        self.assertEqual(Article.objects.get(pk=testArticleId).title, 'Test123')
+        self.assertEqual(Article.objects.get(pk=testArticleId).text, '')
+
+    def test_article_delete(self):
+        numberOfArticles = Article.objects.all().count()
+        articleId = Article.objects.get(title="TestTitle").id
+        response = self.client.delete(reverse('article-detail', args=[articleId]))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Article.objects.all().count(), numberOfArticles - 1)
