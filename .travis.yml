@@ -6,6 +6,7 @@ services:
   - docker
 
 cache:
+  - pip
   directories:
     - frontend/node_modules
 
@@ -27,7 +28,7 @@ install:
 script:
   - docker-compose -f docker-compose.dev.yml build
   - docker-compose -f docker-compose.dev.yml run --rm backend bash -c "python wait_for_postgres.py && python wait_for_neo4j.py && coverage run ./manage.py test && coverage xml -i"
-  - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test
+  - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test -- --coverage
   - docker-compose rm -f
 
   - docker-compose -f docker-compose.build.yml build
@@ -45,4 +46,5 @@ script:
 
 after_success:
   - cd backend && codecov -F backend && cd ../
+  - cd frontend && codecov -F frontend && cd ../
   - fossa
