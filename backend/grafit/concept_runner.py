@@ -21,12 +21,13 @@ class ConceptRunner:
     @classmethod
     def _extract_and_save(cls, article, disconnectAll=False):
         article_node = GraphArticle.nodes.get_or_none(uid=article.id)
-        if disconnectAll:
-            article_node.related.disconnect_all()
 
         if not article_node:
             article_node = GraphArticle(
                 uid=article.id, name=article.title).save()
+
+        if disconnectAll:
+            article_node.related.disconnect_all()
 
         keywords = cls._get_tfidf_extractor().extract_keyphrases(article.text)
         logger.info(f"Extracted keywords {keywords}")
