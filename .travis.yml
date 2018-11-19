@@ -28,8 +28,6 @@ script:
   - docker-compose -f docker-compose.dev.yml build
   - docker-compose -f docker-compose.dev.yml run --rm backend bash -c "python wait_for_postgres.py && python wait_for_neo4j.py && coverage run ./manage.py test && coverage xml -i"
   - docker-compose -f docker-compose.dev.yml run -e CI=true --rm frontend npm test
-  - cd backend && codecov && cd ../
-  - fossa
   - docker-compose rm -f
 
   - docker-compose -f docker-compose.build.yml build
@@ -44,3 +42,7 @@ script:
 
   - docker tag grafit-docs:latest grafitio/grafit-docs
   - docker push grafitio/grafit-docs
+
+after_success:
+  - cd backend && codecov -F backend && cd ../
+  - fossa
