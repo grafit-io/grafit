@@ -15,8 +15,8 @@ class ArticleTest(APITestCase):
         Article.objects.create(title="TestTitle", text="TestText", workspace=workspace)
 
         self.client = APIClient()
-        user = User.objects.get(username='testuser')
-        self.client.force_authenticate(user=user)
+        self.user = User.objects.get(username='testuser')
+        self.client.force_authenticate(user=self.user)
 
     def test_article_list(self):
         response = self.client.get(
@@ -24,9 +24,24 @@ class ArticleTest(APITestCase):
             format="json")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), Article.objects.all().count())
+        self.assertEqual(len(response.data), Article.objects.filter(workspace__users=self.user).count())
         self.assertEqual(response.data[0]['title'], "TestTitle")
         self.assertEqual(response.data[0]['text'], "TestText")
+
+    def test_article_list_workspace_permission(self):
+        other_user = User.objects.create_user('test2', 'test2@example.com', 'testpassword')
+        other_workspace = Workspace(name="Testworkspace", initials="TE")
+        other_workspace.save()
+        other_workspace.users.add(other_user)
+
+        Article.objects.create(title="TestTitle2", text="TestText2", workspace=other_workspace)
+
+        response = self.client.get(
+            reverse('article-list'),
+            format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), Article.objects.filter(workspace__users=self.user).count())
 
     def test_article_create(self):
         url = reverse('article-list')

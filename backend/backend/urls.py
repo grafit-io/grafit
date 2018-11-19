@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'users', views.UserCreateViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'articles', views.ArticleViewSet)
+router.register(r'articles', views.ArticleViewSet, basename="article")
 router.register(r'workspaces', views.WorkspaceViewSet, basename="workspace")
 
 

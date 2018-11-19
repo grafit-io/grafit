@@ -44,8 +44,11 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.order_by('-updated_at')
     serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Article.objects.filter(workspace__users=user).order_by('-updated_at')
 
 
 class WorkspaceViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
