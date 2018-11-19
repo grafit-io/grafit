@@ -32,12 +32,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class SubArticleSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Article
-        fields = ('url', 'id', 'title')
-
-
 class WorkspaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workspace
@@ -45,8 +39,6 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    related = SubArticleSerializer(required=False, many=True)
-
     class Meta:
         model = Article
         fields = ('id', 'url', 'title', 'text',
@@ -54,13 +46,6 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def _save_related(self, article):
         ConceptRunner.generate_concepts_for_article(article.id)
-        article_node = GraphArticle.nodes.get_or_none(uid=article.id)
-        relatedArticles = article_node.related
-
-        for relatedArticle in relatedArticles:
-            article.related.add(Article.objects.get(pk=relatedArticle.uid))
-
-        article.save()
 
     def create(self, validated_data):
         article = Article.objects.create(**validated_data)

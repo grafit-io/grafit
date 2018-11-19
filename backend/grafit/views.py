@@ -5,9 +5,14 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .concept_runner import ConceptRunner
 from .models import User, Article, Workspace, GraphArticle
+import logging
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.StreamHandler())
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -70,10 +75,10 @@ class GraphAPI(APIView):
 
 class ConceptRunnerAPI(APIView):
     def get(self, request, format=None):
-        articleId = int(request.query_params.get('id'))
+        articleId = request.query_params.get('id')
         try:
             if articleId:
-                ConceptRunner.generate_concepts_for_article(articleId)
+                ConceptRunner.generate_concepts_for_article(int(articleId))
             else:
                 ConceptRunner.generate_graph()
             return Response(status.HTTP_200_OK)

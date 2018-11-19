@@ -19,9 +19,10 @@ class ConceptRunner:
         return cls._tfidf_extractor
 
     @classmethod
-    def _extract_and_save(cls, article):
+    def _extract_and_save(cls, article, disconnectAll=False):
         article_node = GraphArticle.nodes.get_or_none(uid=article.id)
-        article_node.related.disconnect_all()
+        if disconnectAll:
+            article_node.related.disconnect_all()
 
         if not article_node:
             article_node = GraphArticle(
@@ -36,13 +37,9 @@ class ConceptRunner:
             related_article = Article.objects.filter(
                 title__iexact=related_title).first()
 
-            if related_article:
-                article.related.add(related_article)
-            else:
+            if not related_article:
                 related_article = Article(title=related_title, workspace=article.workspace)
                 related_article.save()
-                article.related.add(related_article)
-            article.save()
 
             related_article_node = GraphArticle.nodes.get_or_none(
                 uid=related_article.id)
@@ -56,6 +53,9 @@ class ConceptRunner:
             logger.info(
                 f"Set {article_node.name} as related to {related_article_node.name}")
 
+            if article_node.related.is_connected(related_article_node):
+                article_node.related.disconnect(related_article_node)
+
             article_node.related.connect(
                 related_article_node, {'tf_idf': keyword['tf-idf']})
 
@@ -65,9 +65,6 @@ class ConceptRunner:
         articles = Article.objects.all()
 
         for article in articles:
-            article.related.clear()
-
-        for article in articles:
             cls._extract_and_save(article)
 
     @classmethod
@@ -75,5 +72,4 @@ class ConceptRunner:
         article = Article.objects.get(pk=articleId)
 
         if article:
-            article.related.clear()
-            cls._extract_and_save(article)
+            cls._extract_and_save(article, disconnectAll=True)

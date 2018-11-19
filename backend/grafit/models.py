@@ -22,10 +22,22 @@ class Workspace(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField(blank=True)
-    related = models.ManyToManyField("self", blank=True)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def related(self):
+        relatedNodes = []
+        relatedGraphNodes = GraphArticle.nodes.get(uid=self.id).related
+
+        for node in relatedGraphNodes:
+            relatedNodes.append({
+                "id": int(node.uid),
+                "title": node.name
+            })
+
+        return relatedNodes
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
