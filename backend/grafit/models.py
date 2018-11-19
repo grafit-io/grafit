@@ -29,13 +29,18 @@ class Article(models.Model):
     @property
     def related(self):
         relatedNodes = []
-        relatedGraphNodes = GraphArticle.nodes.get(uid=self.id).related
 
-        for node in relatedGraphNodes:
-            relatedNodes.append({
-                "id": int(node.uid),
-                "title": node.name
-            })
+        try:
+            relatedGraphNodes = GraphArticle.nodes.get(uid=self.id).related
+
+            for node in relatedGraphNodes:
+                relatedNodes.append({
+                    "id": int(node.uid),
+                    "title": node.name
+                })
+        except:
+            # article node does not exist yet
+            pass
 
         return relatedNodes
 
