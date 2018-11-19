@@ -7,8 +7,8 @@ services:
 
 cache:
   - pip
-  directories:
-    - frontend/node_modules
+  - directories:
+      - frontend/node_modules
 
 env:
   - DOCKER_COMPOSE_VERSION=1.17.1
