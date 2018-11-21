@@ -41,8 +41,11 @@ class FakeExtractStrategy(ExtractStrategyAbstract):
 
 class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
 
-    def __init__(self):
-        self.corpus = self.load_corpus_db()
+    def __init__(self, loadFromDB=True):
+        if loadFromDB:
+            self.corpus = self.load_corpus_db()
+        else:
+            self.corpus = self.load_corpus()
 
     def tf(self, word, blob):
         return blob.words.count(word) / len(blob.words)
@@ -58,7 +61,7 @@ class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
 
     def load_corpus(self):
         raw_csv = resource_string(
-            'resources', 'grafit_public_article.csv').decode('utf-8').splitlines()
+            'grafit.concept_extractor.resources', 'grafit_public_article.csv').decode('utf-8').splitlines()
         results = list(csv.reader(raw_csv, delimiter=','))
 
         tbs = []
@@ -91,13 +94,3 @@ class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
                 })
 
         return result[:top_n_words]
-
-
-def main():
-    keyword_extractor = TextblobTfIdfExtractStrategy()
-    print(keyword_extractor.extract_keyphrases(
-        "Vulkan Vulkan Vulkan Ollagüe (Spanish pronunciation: [oˈʝaɣwe]) or Ullawi (Aymara pronunciation: [uˈʎawi]) is a massive andesite stratovolcano in the Andes on the border between Bolivia and Chile, within the Antofagasta Region of Chile and the Potosi Department of Bolivia. Part of the Central Volcanic Zone of the Andes, its highest summit is 5,868 metres (19,252 ft) above sea level and features a summit crater that opens to the south. The western rim of the summit crater is formed by a compound of lava domes, the youngest of which features a vigorous fumarole that is visible from afar."))
-
-
-if __name__ == '__main__':
-    main()
