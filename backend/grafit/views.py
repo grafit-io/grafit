@@ -79,6 +79,7 @@ class GraphAPI(APIView):
 class SearchAPI(APIView):
     def get(self, request, format=None):
         searchTerm = request.query_params.get('searchTerm')
+        searchTerm = searchTerm.replace(" ", "|")
         results = SearchResult.objects.raw('''
             SELECT id, title, ts_rank(document, to_tsquery('english', %s)) as rank
             FROM grafit_search_index
