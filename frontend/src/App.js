@@ -6,7 +6,7 @@ import {
   Switch
 } from "react-router-dom";
 import ArticleList from "./components/ArticleList";
-import ArticleDetail from "./components/ArticleDetail";
+import ArticleDetail from "./components/articledetail/ArticleDetail";
 import Login from "./components/login/Login";
 import Nagivation from "./components/navigation/Navigation";
 import Workspace from "./components/workspace/Workspace";

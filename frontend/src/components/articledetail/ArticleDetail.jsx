@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { APIService } from "../services/APIService";
+import { Treebeard } from "react-treebeard";
+import { APIService } from "../../services/APIService";
 import {
   Alert,
   FormGroup,
@@ -10,6 +11,7 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
+import { TreeStyle } from "./treebeardstyles";
 
 class ArticleDetail extends Component {
   state = {
@@ -21,12 +23,84 @@ class ArticleDetail extends Component {
     edit: false,
     new: false,
     alertSuccess: false,
-    redirectDeleted: false
+    redirectDeleted: false,
+    treebeardData: {}
+  };
+
+  constructor(props) {
+    super(props);
+    this.onToggle = this.onToggle.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.location.state) {
+      const isNew = this.props.location.state.new;
+      if (isNew) {
+        this.setState({ new: true });
+      }
+    } else {
+      this.loadArticle(this.props.match.params.articleId);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      if (
+        nextProps.match.params.articleId !== this.props.match.params.articleId
+      ) {
+        this.loadArticle(nextProps.match.params.articleId);
+      }
+    }
+  }
+
+  getTreebeardData = () => {
+    return {
+      name: this.state.article.title,
+      toggled: true,
+      children: this.state.article.related.map(this.generateRelatedNode)
+    };
+  };
+
+  onToggle(node, toggled) {
+    console.log(node);
+    if (this.state.cursor) {
+      this.setState({
+        cursor: {
+          active: false
+        }
+      });
+    }
+    if (node.loading) {
+      console.log("load new data for: " + node.id);
+      APIService.getArticle(node.id)
+        .then(article => {
+          node.children = article.related.map(this.generateRelatedNode);
+          node.loading = false;
+        })
+        .then(() => {
+          node.active = true;
+          if (node.children) {
+            node.toggled = toggled;
+          }
+          this.setState({ cursor: node });
+        });
+    }
+  }
+
+  generateRelatedNode = related => {
+    console.log(related);
+    return {
+      id: related.id,
+      name: related.title,
+      loading: true,
+      children: []
+    };
   };
 
   loadArticle = articleId => {
     APIService.getArticle(articleId).then(article => {
       this.setState({ article: article });
+      this.setState({ treebeardData: this.getTreebeardData() });
     });
   };
 
@@ -79,27 +153,6 @@ class ArticleDetail extends Component {
       return "error";
     }
   };
-
-  componentDidMount() {
-    if (this.props.location.state) {
-      const isNew = this.props.location.state.new;
-      if (isNew) {
-        this.setState({ new: true });
-      }
-    } else {
-      this.loadArticle(this.props.match.params.articleId);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps) {
-      if (
-        nextProps.match.params.articleId !== this.props.match.params.articleId
-      ) {
-        this.loadArticle(nextProps.match.params.articleId);
-      }
-    }
-  }
 
   render() {
     if (this.state.redirectDeleted) {
@@ -242,6 +295,12 @@ class ArticleDetail extends Component {
                 </Link>
               ))}
               <p>{this.state.article.text}</p>
+              <h3>Related Articles</h3>
+              <Treebeard
+                data={this.state.treebeardData}
+                onToggle={this.onToggle}
+                style={TreeStyle}
+              />
             </div>
           )}
         </div>
