@@ -14,6 +14,7 @@ import WorkspaceToggle from "./components/workspace/WorkspaceToggle";
 import { AuthService } from "./services/AuthService";
 import "./App.css";
 import Register from "./components/Register";
+import Searchbar from "./components/search/Searchbar";
 
 class App extends Component {
   state = {
@@ -56,6 +57,7 @@ class App extends Component {
           />
 
           <div className="content">
+            <Searchbar auth={authProps} />
             <WorkspaceToggle auth={authProps} />
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
