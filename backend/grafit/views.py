@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .concept_runner import ConceptRunner
-from .models import User, Article, Workspace, GraphArticle
+from .models import User, Article, Workspace, GraphArticle, SearchResult
 import logging
 
 
@@ -72,6 +72,23 @@ class GraphAPI(APIView):
 
         for node in GraphArticle.nodes:
             response.append((node.uid, node.name))
+
+        return Response(response)
+
+
+class SearchAPI(APIView):
+    def get(self, request, format=None):
+        searchTerm = request.query_params.get('searchTerm')
+        results = SearchResult.objects.raw('''
+            SELECT id, title, ts_rank(document, to_tsquery('english', %s)) as rank
+            FROM grafit_search_index
+            WHERE document @@ to_tsquery('english', %s)
+            ORDER BY rank DESC ''', [searchTerm, searchTerm])
+
+        response = []
+
+        for node in results:
+            response.append((node.id, node.title, node.rank))
 
         return Response(response)
 

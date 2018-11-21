@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 from .concept_runner import ConceptRunner
 
-from .models import User, Article, Workspace, GraphArticle
+from .models import User, Article, Workspace, GraphArticle, SearchResult
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -36,6 +36,12 @@ class WorkspaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workspace
         fields = ('id', 'url', 'name', 'initials')
+
+
+class SearchResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SearchResult
+        fields = ('id', 'title', 'rank')
 
 
 class ArticleSerializer(serializers.ModelSerializer):

@@ -59,3 +59,13 @@ class GraphArticle(StructuredNode):
     uid = UniqueIdProperty()
     name = StringProperty()
     related = Relationship('GraphArticle', 'RELATED', model=ArticleRel)
+
+
+class SearchResult(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    title = models.TextField()
+    rank = models.DecimalField(max_digits=19, decimal_places=2)
+
+    class Meta:
+        managed = False
+        db_table = 'search_index'
