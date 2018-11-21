@@ -51,7 +51,7 @@ export default class Workspace extends Component {
                         ? "active"
                         : ""
                     }
-                    bsSize="primary"
+                    bsStyle="primary"
                     onClick={event => {
                       event.preventDefault();
                       this.handleWorkspaceClick(workspace.id);
