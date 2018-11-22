@@ -6,7 +6,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .concept_runner import ConceptRunner
-from .models import User, Article, Workspace, GraphArticle, SearchResult
+from .search.search import Search
+from .models import User, Article, Workspace, GraphArticle
 import logging
 
 
@@ -73,12 +74,7 @@ class SearchResultViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         if not searchTerm:
             return Response([])
 
-        searchTerm = searchTerm.replace(" ", "|")
-        queryset = SearchResult.objects.raw('''
-            SELECT id, title, ts_rank(document, to_tsquery('english', %s)) as rank
-            FROM grafit_search_index
-            WHERE document @@ to_tsquery('english', %s)
-            ORDER BY rank DESC ''', [searchTerm, searchTerm])
+        queryset = Search.search(searchTerm)
 
         serializer = SearchResultSerializer(queryset, many=True)
         return Response(serializer.data)
