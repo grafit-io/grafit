@@ -11,6 +11,7 @@ import Login from "./components/login/Login";
 import Nagivation from "./components/navigation/Navigation";
 import Workspace from "./components/workspace/Workspace";
 import WorkspaceToggle from "./components/workspace/WorkspaceToggle";
+import CreateWorkspace from "./components/workspace/CreateWorkspace";
 import { AuthService } from "./services/AuthService";
 import "./App.css";
 import Register from "./components/Register";
@@ -62,6 +63,7 @@ class App extends Component {
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
               <Route path="/signup" component={Register} />
+              <Route path="/createworkspace" component={CreateWorkspace} />
               {this.state.finishedLoading && !this.state.isAuthenticated && (
                 <Redirect push to="/login" />
               )}

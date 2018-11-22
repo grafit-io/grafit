@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "./Workspace.css";
-import { Button } from "react-bootstrap";
+import { Button, Glyphicon } from "react-bootstrap";
 import { APIService } from "../../services/APIService";
 
-export default class Workspace extends Component {
+class Workspace extends Component {
   state = {
     workspaces: [],
     activeWorkspaceId: 1
@@ -19,6 +20,10 @@ export default class Workspace extends Component {
       .catch(console.log);
   };
 
+  createWorkspace() {
+    this.props.history.push("/createworkspace");
+  }
+
   handleWorkspaceClick(workspace) {
     this.props.changeWorkspace(workspace);
     this.setState({ activeWorkspaceId: workspace });
@@ -29,11 +34,7 @@ export default class Workspace extends Component {
   }
 
   render() {
-    if (
-      !this.props.auth.isAuthenticated ||
-      !this.state.workspaces ||
-      !this.state.workspaces.length
-    ) {
+    if (!this.props.auth.isAuthenticated) {
       return null;
     }
     return (
@@ -58,12 +59,23 @@ export default class Workspace extends Component {
                     }}
                     block
                   >
-                    {workspace.initials}
+                    {workspace.initials.toUpperCase()}
                   </Button>
                 </li>
               ))}
+          <Button
+            bsStyle="primary"
+            onClick={event => {
+              event.preventDefault();
+              this.createWorkspace();
+            }}
+          >
+            <Glyphicon glyph="plus" />
+          </Button>
         </ul>
       </div>
     );
   }
 }
+
+export default withRouter(Workspace);

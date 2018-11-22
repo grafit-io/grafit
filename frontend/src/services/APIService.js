@@ -14,6 +14,7 @@ export const APIService = {
   createArticle,
   deleteArticle,
   getWorkspaces,
+  createWorkspace,
   createUser
 };
 
@@ -121,6 +122,14 @@ function deleteArticle(id) {
 
 function getWorkspaces() {
   return callGetAPI(WORKSPACE_ENDPOINT).catch(error => console.log(error));
+}
+
+function createWorkspace(name, initials) {
+  const workspace = {
+    name: name,
+    initials: initials
+  };
+  return callPostAPI(WORKSPACE_ENDPOINT, workspace);
 }
 
 function createUser(username, password, firstname, lastname, email) {

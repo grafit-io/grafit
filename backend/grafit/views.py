@@ -51,9 +51,12 @@ class ArticleViewSet(viewsets.ModelViewSet):
         return Article.objects.filter(workspace__users=user).order_by('-updated_at')
 
 
-class WorkspaceViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
+class WorkspaceViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin,
                        viewsets.GenericViewSet):
     serializer_class = WorkspaceSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(users=[self.request.user])
 
     def get_queryset(self):
         """

@@ -65,7 +65,6 @@ export default class Register extends Component {
 
     return (
       <div>
-        <hr />
         <div className="Register">
           <form onSubmit={this.handleSubmit.bind(this)}>
             {this.state.alert && (
