@@ -62,7 +62,6 @@ class ArticleDetail extends Component {
   };
 
   onToggle(node, toggled) {
-    console.log(node);
     if (this.state.cursor) {
       this.setState({
         cursor: {
@@ -71,7 +70,6 @@ class ArticleDetail extends Component {
       });
     }
     if (node.loading) {
-      console.log("load new data for: " + node.id);
       APIService.getArticle(node.id)
         .then(article => {
           node.children = article.related.map(this.generateRelatedNode);
@@ -84,11 +82,14 @@ class ArticleDetail extends Component {
           }
           this.setState({ cursor: node });
         });
+    } else {
+      if (node.children) {
+        node.toggled = toggled;
+      }
     }
   }
 
   generateRelatedNode = related => {
-    console.log(related);
     return {
       id: related.id,
       name: related.title,
@@ -264,7 +265,7 @@ class ArticleDetail extends Component {
           {this.state.alertSuccess && <Alert bsStyle="success">Saved</Alert>}
           {this.state.article && (
             <div>
-              <h2>Detail View: {this.state.article.title}</h2>
+              <h2>{this.state.article.title}</h2>
               <ButtonToolbar>
                 <Button bsStyle="primary" onClick={this.handleClick}>
                   Edit
