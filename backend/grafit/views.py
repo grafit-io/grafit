@@ -1,6 +1,6 @@
 import time
 from django.contrib.auth.models import Group
-from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer
+from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer, SearchResultSerializer
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -64,34 +64,24 @@ class WorkspaceViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
         return Workspace.objects.filter(users=user)
 
 
-class GraphAPI(APIView):
-    def get(self, request, format=None):
-        ts = int(round(time.time()))
-        GraphArticle(uid=ts, name='test').save()
-        response = []
+class SearchResultViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = []
 
-        for node in GraphArticle.nodes:
-            response.append((node.uid, node.name))
+    def list(self, request):
+        searchTerm = request.query_params.get('searchTerm', None)
 
-        return Response(response)
+        if not searchTerm:
+            return Response([])
 
-
-class SearchAPI(APIView):
-    def get(self, request, format=None):
-        searchTerm = request.query_params.get('searchTerm')
         searchTerm = searchTerm.replace(" ", "|")
-        results = SearchResult.objects.raw('''
+        queryset = SearchResult.objects.raw('''
             SELECT id, title, ts_rank(document, to_tsquery('english', %s)) as rank
             FROM grafit_search_index
             WHERE document @@ to_tsquery('english', %s)
             ORDER BY rank DESC ''', [searchTerm, searchTerm])
 
-        response = []
-
-        for node in results:
-            response.append((node.id, node.title, node.rank))
-
-        return Response(response)
+        serializer = SearchResultSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class ConceptRunnerAPI(APIView):

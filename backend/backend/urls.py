@@ -11,6 +11,7 @@ router.register(r'users', views.UserCreateViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'articles', views.ArticleViewSet, basename="article")
 router.register(r'workspaces', views.WorkspaceViewSet, basename="workspace")
+router.register(r'search', views.SearchResultViewSet, basename="serach")
 
 
 urlpatterns = [
@@ -19,8 +20,6 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/runner', views.ConceptRunnerAPI.as_view()),
-    path('api/v1/graph', views.GraphAPI.as_view()),
-    path('api/v1/search', views.SearchAPI.as_view()),
 
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
