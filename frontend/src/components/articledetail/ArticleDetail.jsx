@@ -57,7 +57,7 @@ class ArticleDetail extends Component {
       name: this.state.article.title,
       toggled: true,
       children: this.state.article.related.map(this.generateRelatedNode),
-      route: "MyRoute"
+      level: 0
     };
   };
 
@@ -72,7 +72,9 @@ class ArticleDetail extends Component {
     if (node.loading) {
       APIService.getArticle(node.id)
         .then(article => {
-          node.children = article.related.map(this.generateRelatedNode);
+          node.children = article.related.map(related =>
+            this.generateRelatedNode(related, node.level + 1)
+          );
           node.loading = false;
         })
         .then(() => {
@@ -89,12 +91,19 @@ class ArticleDetail extends Component {
     }
   }
 
-  generateRelatedNode = related => {
+  generateRelatedNode = (related, level) => {
+    if (level > 3) {
+      return {
+        id: related.id,
+        name: related.title
+      };
+    }
     return {
       id: related.id,
       name: related.title,
       loading: true,
-      children: []
+      children: [],
+      level: level
     };
   };
 
