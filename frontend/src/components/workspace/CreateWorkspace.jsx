@@ -30,7 +30,6 @@ class CreateWorkspace extends Component {
   };
 
   handleChange = evt => {
-    console.log(evt.target.name);
     if (evt.target.name === "initials" && !this.state.userInitials) {
       this.setState({ userInitials: true });
     }
@@ -56,6 +55,10 @@ class CreateWorkspace extends Component {
       this.state.workspace.initials
     )
       .then(() => {
+        this.props.createAlert(
+          this.state.workspace.initials,
+          `Workspace ${this.state.workspace.name} created`
+        );
         this.props.history.push("/");
       })
       .catch(console.log);

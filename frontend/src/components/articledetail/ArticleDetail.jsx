@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import { Treebeard } from "react-treebeard";
 import { APIService } from "../../services/APIService";
 import {
-  Alert,
   FormGroup,
   ControlLabel,
   FormControl,
@@ -22,7 +21,6 @@ class ArticleDetail extends Component {
     },
     edit: false,
     new: false,
-    alertSuccess: false,
     redirectDeleted: false,
     treebeardData: {}
   };
@@ -111,6 +109,10 @@ class ArticleDetail extends Component {
 
   deleteItem = () => {
     APIService.deleteArticle(this.props.match.params.articleId).then(() => {
+      this.props.createAlert(
+        "Deleted Article",
+        `Article {this.props.match.params.articleId} was successfully deleted`
+      );
       this.setState({ redirectDeleted: true });
     });
   };
@@ -123,7 +125,11 @@ class ArticleDetail extends Component {
     )
       .then(article => {
         this.props.history.push("/articles/" + article.id);
-        this.setState({ new: false, alertSuccess: true });
+        this.setState({ new: false });
+        this.props.createAlert(
+          "Created Article",
+          `Article ${this.state.article.title} was saved`
+        );
       })
       .catch(console.log);
   };
@@ -136,7 +142,11 @@ class ArticleDetail extends Component {
       this.props.currentWorkspace
     )
       .then(article => {
-        this.setState({ article: article, alertSuccess: true, edit: false });
+        this.setState({ article: article, edit: false });
+        this.props.createAlert(
+          "Updated Article",
+          `Article ${this.state.article.title} was updated`
+        );
       })
       .catch(console.log);
   };
@@ -262,7 +272,6 @@ class ArticleDetail extends Component {
       return (
         <div>
           <hr />
-          {this.state.alertSuccess && <Alert bsStyle="success">Saved</Alert>}
           {this.state.article && (
             <div>
               <h2>{this.state.article.title}</h2>

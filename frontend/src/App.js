@@ -16,12 +16,31 @@ import { AuthService } from "./services/AuthService";
 import "./App.css";
 import Register from "./components/Register";
 import Searchbar from "./components/search/Searchbar";
+import AlertSnack from "./components/AlertSnack";
 
 class App extends Component {
   state = {
     isAuthenticated: false,
     finishedLoading: false,
-    currentWorkspace: undefined
+    currentWorkspace: undefined,
+    alerts: []
+  };
+
+  createAlert = (title, message, type = "success", duration = 5000) => {
+    this.setState(prevState => ({
+      alerts: [
+        ...prevState.alerts,
+        { title: title, message: message, type: type, duration: duration }
+      ]
+    }));
+    // auto remove after duration
+    setTimeout(() => {
+      this.setState(prevState => ({
+        alerts: prevState.alerts.filter(
+          alert => alert.title !== title && alert.message !== message
+        )
+      }));
+    }, duration);
   };
 
   handleWorkspaceChange = workspace => {
@@ -60,10 +79,16 @@ class App extends Component {
           <div className="content">
             <Searchbar auth={authProps} />
             <WorkspaceToggle auth={authProps} />
+            <AlertSnack alerts={this.state.alerts} />
             <Switch>
               <Route path="/login" render={() => <Login auth={authProps} />} />
               <Route path="/signup" component={Register} />
-              <Route path="/createworkspace" component={CreateWorkspace} />
+              <Route
+                path="/createworkspace"
+                render={props => (
+                  <CreateWorkspace {...props} createAlert={this.createAlert} />
+                )}
+              />
               {this.state.finishedLoading && !this.state.isAuthenticated && (
                 <Redirect push to="/login" />
               )}
@@ -74,6 +99,7 @@ class App extends Component {
                   <ArticleList
                     {...props}
                     currentWorkspace={this.state.currentWorkspace}
+                    createAlert={this.createAlert}
                   />
                 )}
               />
@@ -84,6 +110,7 @@ class App extends Component {
                   <ArticleDetail
                     {...props}
                     currentWorkspace={this.state.currentWorkspace}
+                    createAlert={this.createAlert}
                   />
                 )}
               />

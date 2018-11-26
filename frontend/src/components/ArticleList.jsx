@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { APIService } from "../services/APIService";
-import { Alert, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class ArticleList extends Component {
   state = {
@@ -29,20 +29,13 @@ class ArticleList extends Component {
           deletedId: deletedId
         });
         this.props.location.state.deletedId = null;
-        setTimeout(() => {
-          this.setState({ deletedId: undefined });
-        }, 5000);
       }
     }
   }
 
   render() {
-    const deletedId = this.state.deletedId;
     return (
       <div>
-        {deletedId && (
-          <Alert bsStyle="success">Deleted Article {deletedId}</Alert>
-        )}
         <Link to={{ pathname: "/articles/new", state: { new: true } }}>
           <Button bsStyle="default" onClick={this.handleClick}>
             Create New Article
