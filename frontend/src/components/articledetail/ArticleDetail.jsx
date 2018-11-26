@@ -56,7 +56,9 @@ class ArticleDetail extends Component {
     return {
       name: this.state.article.title,
       toggled: true,
-      children: this.state.article.related.map(this.generateRelatedNode),
+      children: this.state.article.related.map(related =>
+        this.generateRelatedNode(related, 1)
+      ),
       level: 0
     };
   };
@@ -92,7 +94,7 @@ class ArticleDetail extends Component {
   }
 
   generateRelatedNode = (related, level) => {
-    if (level > 3) {
+    if (level > 5) {
       return {
         id: related.id,
         name: related.title
