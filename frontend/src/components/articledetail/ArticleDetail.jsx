@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Treebeard } from "react-treebeard";
+import { Treebeard, decorators } from "react-treebeard";
 import { APIService } from "../../services/APIService";
 import {
   FormGroup,
@@ -11,6 +11,7 @@ import {
   ButtonToolbar
 } from "react-bootstrap";
 import { TreeStyle } from "./treebeardstyles";
+import Header from "./TreebeadHeader";
 
 class ArticleDetail extends Component {
   state = {
@@ -55,7 +56,8 @@ class ArticleDetail extends Component {
     return {
       name: this.state.article.title,
       toggled: true,
-      children: this.state.article.related.map(this.generateRelatedNode)
+      children: this.state.article.related.map(this.generateRelatedNode),
+      route: "MyRoute"
     };
   };
 
@@ -269,6 +271,9 @@ class ArticleDetail extends Component {
         </Fragment>
       );
     } else {
+      // set custom treebeard header
+      decorators.Header = Header;
+
       return (
         <div>
           <hr />
