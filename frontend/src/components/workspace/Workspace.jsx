@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import "./Workspace.css";
 import { Button, Glyphicon } from "react-bootstrap";
 import { APIService } from "../../services/APIService";
+import "./Workspace.css";
 
 class Workspace extends Component {
   state = {
@@ -62,6 +62,7 @@ class Workspace extends Component {
                     bsStyle="primary"
                     onClick={event => {
                       event.preventDefault();
+                      this.props.history.push("/");
                       this.handleWorkspaceClick(workspace.id);
                     }}
                     block
