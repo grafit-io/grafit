@@ -23,6 +23,7 @@ class App extends Component {
     isAuthenticated: false,
     finishedLoading: false,
     currentWorkspace: undefined,
+    refreshWorkspaces: false,
     alerts: []
   };
 
@@ -45,6 +46,10 @@ class App extends Component {
 
   handleWorkspaceChange = workspace => {
     this.setState({ currentWorkspace: workspace });
+  };
+
+  refreshWorkspaces = () => {
+    this.setState({ refreshWorkspaces: !this.state.refreshWorkspaces });
   };
 
   userHasAuthenticated = authenticated => {
@@ -74,6 +79,8 @@ class App extends Component {
           <Workspace
             auth={authProps}
             changeWorkspace={this.handleWorkspaceChange}
+            refresh={this.state.refreshWorkspaces}
+            refreshWorkspaces={this.refreshWorkspaces}
           />
 
           <div className="content">
@@ -86,7 +93,11 @@ class App extends Component {
               <Route
                 path="/createworkspace"
                 render={props => (
-                  <CreateWorkspace {...props} createAlert={this.createAlert} />
+                  <CreateWorkspace
+                    {...props}
+                    createAlert={this.createAlert}
+                    refreshWorkspaces={this.refreshWorkspaces}
+                  />
                 )}
               />
               {this.state.finishedLoading && !this.state.isAuthenticated && (

@@ -33,6 +33,13 @@ class Workspace extends Component {
     this.loadWorkspaces();
   }
 
+  componentWillReceiveProps(props) {
+    if (props.refresh) {
+      this.loadWorkspaces();
+      this.props.refreshWorkspaces();
+    }
+  }
+
   render() {
     if (!this.props.auth.isAuthenticated) {
       return null;

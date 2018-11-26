@@ -59,6 +59,7 @@ class CreateWorkspace extends Component {
           this.state.workspace.initials,
           `Workspace ${this.state.workspace.name} created`
         );
+        this.props.refreshWorkspaces();
         this.props.history.push("/");
       })
       .catch(console.log);
