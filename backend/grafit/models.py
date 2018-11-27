@@ -64,6 +64,7 @@ class GraphArticle(StructuredNode):
 class SearchResult(models.Model):
     id = models.BigIntegerField(primary_key=True)
     title = models.TextField()
+    headline = models.TextField()
     rank = models.DecimalField(max_digits=19, decimal_places=2)
 
     class Meta:

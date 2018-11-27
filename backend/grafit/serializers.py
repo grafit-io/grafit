@@ -41,7 +41,7 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 class SearchResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = SearchResult
-        fields = ('id', 'title', 'rank')
+        fields = ('id', 'title', 'headline', 'rank')
 
 
 class ArticleSerializer(serializers.ModelSerializer):

@@ -31,9 +31,10 @@ class Search:
         logger.info("searching for: " + cleanSearchTerm)
 
         queryset = SearchResult.objects.raw('''
-            SELECT id, title, ts_rank(document, to_tsquery('english', %s)) as rank
+            SELECT grafit_search_index.id, ts_headline(grafit_search_index.title, to_tsquery('english', %(query)s)) as title, ts_headline(grafit_article.text, to_tsquery('english', %(query)s)) as headline, ts_rank(document, to_tsquery('english', %(query)s)) as rank
             FROM grafit_search_index
-            WHERE document @@ to_tsquery('english', %s)
-            ORDER BY rank DESC ''', [cleanSearchTerm, cleanSearchTerm])
+            INNER  JOIN grafit_article  ON grafit_article.id = grafit_search_index.id
+            WHERE grafit_search_index.document @@ to_tsquery('english', %(query)s)
+            ORDER BY rank DESC ''', {'query': cleanSearchTerm})
 
         return queryset
