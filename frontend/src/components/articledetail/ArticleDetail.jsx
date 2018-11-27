@@ -196,7 +196,6 @@ class ArticleDetail extends Component {
         <Fragment>
           {this.state.article && (
             <div>
-              <hr />
               <h2>Edit Article: {this.state.article.title}</h2>
               <form>
                 <FormGroup
@@ -241,7 +240,6 @@ class ArticleDetail extends Component {
       return (
         <Fragment>
           <div>
-            <hr />
             <h2>New Article: {this.state.article.title}</h2>
             <form>
               <FormGroup
@@ -287,7 +285,6 @@ class ArticleDetail extends Component {
 
       return (
         <div>
-          <hr />
           {this.state.article && (
             <div>
               <h2>{this.state.article.title}</h2>

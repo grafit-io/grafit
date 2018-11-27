@@ -51,7 +51,7 @@ export default class Login extends Component {
     }
 
     return (
-      <div className="Login">
+      <div className="login">
         <form onSubmit={this.handleSubmit.bind(this)}>
           <Image src="logo_transparent.svg" />
 

@@ -8,15 +8,15 @@ import {
 import ArticleList from "./components/ArticleList";
 import ArticleDetail from "./components/articledetail/ArticleDetail";
 import Login from "./components/login/Login";
+import Register from "./components/login/Register";
 import Nagivation from "./components/navigation/Navigation";
 import Workspace from "./components/workspace/Workspace";
 import WorkspaceToggle from "./components/workspace/WorkspaceToggle";
 import CreateWorkspace from "./components/workspace/CreateWorkspace";
-import { AuthService } from "./services/AuthService";
-import "./App.css";
-import Register from "./components/Register";
 import Searchbar from "./components/search/Searchbar";
 import AlertSnack from "./components/AlertSnack";
+import { AuthService } from "./services/AuthService";
+import "./App.css";
 
 class App extends Component {
   state = {

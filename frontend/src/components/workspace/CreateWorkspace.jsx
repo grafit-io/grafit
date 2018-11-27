@@ -72,8 +72,7 @@ class CreateWorkspace extends Component {
         <h2>Create Workspace</h2>
         <form
           style={{
-            maxWidth: 450,
-            margin: "0 auto"
+            maxWidth: 450
           }}
         >
           <FormGroup

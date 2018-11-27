@@ -1,15 +1,21 @@
-.Login img {
+.login img {
   width: 100%;
   margin-bottom: 20px;
 }
-.Login {
-  max-width: 330px;
+.login,
+.signin {
+  max-width: 330px !important;
   padding: 15px;
   margin: 0 auto;
 }
 
+.signin {
+  margin-top: 50px;
+}
+
 @media screen and (max-width: 768px) {
-  .Login {
+  .login,
+  .signin {
     padding-left: 80px;
   }
 }
