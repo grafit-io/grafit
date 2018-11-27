@@ -6,6 +6,17 @@ export const TreeStyle = {
       padding: 0
     },
     node: {
+      container: {
+        link: {
+          cursor: "pointer",
+          position: "relative",
+          padding: "0px 5px",
+          display: "block"
+        },
+        activeLink: {
+          background: "#31363F"
+        }
+      },
       link: {
         cursor: "pointer",
         position: "relative",
