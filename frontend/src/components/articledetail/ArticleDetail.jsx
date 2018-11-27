@@ -124,7 +124,7 @@ class ArticleDetail extends Component {
     APIService.deleteArticle(this.props.match.params.articleId).then(() => {
       this.props.createAlert(
         "Deleted Article",
-        `Article {this.props.match.params.articleId} was successfully deleted`
+        `Article ${this.state.article.title} was successfully deleted`
       );
       this.setState({ redirectDeleted: true });
     });
