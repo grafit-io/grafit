@@ -1,15 +1,27 @@
 import React, { Component } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
-export default class SearchResultPopover extends Component {
+class CustomListGroupItem extends ListGroupItem {
+  renderHeader(header, headingClassName) {
+    return (
+      <h4 className={headingClassName}>
+        <div dangerouslySetInnerHTML={{ __html: header }} />
+      </h4>
+    );
+  }
+}
+
+class SearchResultPopover extends Component {
   constructor(className, style) {
     super();
     this.className = className;
     this.style = style;
   }
 
-  handleClick = id => {
-    console.log(id);
+  handleClick = (id, e) => {
+    this.props.history.push(`/articles/${id}`);
+    this.props.handleToggle();
   };
 
   render() {
@@ -34,16 +46,21 @@ export default class SearchResultPopover extends Component {
         <ListGroup>
           {this.props.searchResults &&
             this.props.searchResults.map(searchResult => (
-              <ListGroupItem
+              <CustomListGroupItem
                 key={searchResult.id}
                 href="#"
                 header={searchResult.title}
+                onClick={e => this.handleClick(searchResult.id, e)}
               >
-                {searchResult.headline}
-              </ListGroupItem>
+                <span
+                  dangerouslySetInnerHTML={{ __html: searchResult.headline }}
+                />
+              </CustomListGroupItem>
             ))}
         </ListGroup>
       </div>
     );
   }
 }
+
+export default withRouter(SearchResultPopover);

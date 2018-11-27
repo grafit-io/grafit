@@ -91,7 +91,10 @@ export default class Searchbar extends Component {
           target={() => ReactDOM.findDOMNode(this.target)}
           rootClose={true}
         >
-          <SearchResultPopover searchResults={this.state.searchResults} />
+          <SearchResultPopover
+            searchResults={this.state.searchResults}
+            handleToggle={this.handleToggle}
+          />
         </Overlay>
       </div>
     );
