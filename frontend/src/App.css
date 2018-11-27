@@ -1,3 +1,7 @@
 .badge {
   margin-right: 5px;
 }
+
+.content > div {
+  max-width: 1000px;
+}
