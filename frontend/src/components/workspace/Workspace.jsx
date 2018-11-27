@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Glyphicon } from "react-bootstrap";
 import { APIService } from "../../services/APIService";
+import UserDropdown from "./UserDropdown";
+
 import "./Workspace.css";
 
 class Workspace extends Component {
@@ -47,6 +49,9 @@ class Workspace extends Component {
     return (
       <div id="sidebar" className="sidebar-offcanvas">
         <ul className="nav nav-pills nav-stacked">
+          <UserDropdown auth={this.props.auth} />
+          <li />
+          <hr className="horizontal-rule" />
           {this.state.workspaces &&
             this.state.workspaces
               .filter(workspace => workspace.initials !== "")
@@ -72,7 +77,8 @@ class Workspace extends Component {
                 </li>
               ))}
           <Button
-            bsStyle="primary"
+            bsStyle="default"
+            id="add-workspace-btn"
             onClick={event => {
               event.preventDefault();
               this.createWorkspace();

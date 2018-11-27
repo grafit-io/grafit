@@ -1,9 +1,10 @@
 #sidebar {
+  border-top: 6px solid var(--primary-500);
   width: inherit;
   min-width: 80px;
   max-width: 80px;
   background-color: var(--grey-100);
-  border-right: 1px solid var(--grey-200);
+  border-right: 2px solid var(--grey-200);
   float: left;
   height: 100%;
   position: relative;
@@ -42,4 +43,22 @@
     position: absolute;
     top: 0;
   }
+}
+
+.horizontal-rule {
+  width: 60px;
+  margin: 20px auto 0px auto;
+  border-bottom: 2px solid var(--grey-200);
+}
+
+#user-dropdown-menu {
+  position: fixed;
+}
+
+#user-dropdown {
+  background-color: var(--primary-500);
+}
+
+#add-workspace-btn{
+  background-color: var(--grey-200);
 }

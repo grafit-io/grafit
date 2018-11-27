@@ -10,16 +10,13 @@ html {
   height: 100%;
 }
 
-body {
-  padding-top: 50px;
-}
-
 #root,
 .row-offcanvas {
   height: 100%;
 }
 
 .content {
+  border-top:6px solid var(--primary-400);
   height: 100%;
   overflow: auto;
   padding: 50px;
@@ -56,9 +53,10 @@ fieldset[disabled] .btn-primary {
 }
 
 :root {
-  --priamry-100: hsl(258, 30%, 84%);
-  --priamry-200: hsl(258, 30%, 76%);
-  --priamry-300: hsl(258, 30%, 68%);
+  --primary-000: hsl(258, 30%, 98%);
+  --primary-100: hsl(258, 30%, 84%);
+  --primary-200: hsl(258, 30%, 76%);
+  --primary-300: hsl(258, 30%, 68%);
   --primary-400: hsl(258, 30%, 60%);
   --primary-500: hsl(258, 30%, 52%);
   --primary-600: hsl(258, 30%, 44%);
