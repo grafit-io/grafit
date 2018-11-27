@@ -6,6 +6,7 @@ import {
   Button,
   FormControl
 } from "react-bootstrap";
+import "./Searchbar.css";
 
 export default class Searchbar extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class Searchbar extends Component {
     return (
       <div>
         <FormGroup>
-          <InputGroup bsSize="large">
+          <InputGroup bsSize="large" className="searchbar">
             <FormControl type="search" placeholder="search..." />
             <InputGroup.Button>
               <Button>
