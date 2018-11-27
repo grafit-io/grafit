@@ -3,7 +3,8 @@ import {
   API,
   ARTICLE_ENDPOINT,
   USER_ENDPOINT,
-  WORKSPACE_ENDPOINT
+  WORKSPACE_ENDPOINT,
+  SEARCH_ENDPOINT
 } from "../constants";
 
 export const APIService = {
@@ -15,7 +16,8 @@ export const APIService = {
   deleteArticle,
   getWorkspaces,
   createWorkspace,
-  createUser
+  createUser,
+  getSearchResults
 };
 
 function callGetAPI(query) {
@@ -156,4 +158,8 @@ function createUser(username, password, firstname, lastname, email) {
       throw new Error("Could not send post");
     }
   });
+}
+
+function getSearchResults(query) {
+  return callGetAPI(SEARCH_ENDPOINT + query).catch(error => console.log(error));
 }

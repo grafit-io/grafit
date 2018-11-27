@@ -8,32 +8,8 @@ export default class SearchResultPopover extends Component {
     this.style = style;
   }
 
-  state = {
-    searchResults: [
-      {
-        id: 31,
-        title: "The Marketing Behind MongoDB",
-        headline:
-          "<strong>MongoDB</strong>’s success among startups was because some didn't critically assess 10gen’s <b>marketing</b>",
-        rank: "0.61"
-      },
-      {
-        id: 2,
-        title: "MongoDB",
-        rank: "0.37"
-      },
-      {
-        id: 32,
-        title:
-          "Countless NoSQL databases competed to be the database of choice",
-        rank: "0.36"
-      },
-      {
-        id: 25,
-        title: "Death By Database",
-        rank: "0.12"
-      }
-    ]
+  handleClick = id => {
+    console.log(id);
   };
 
   render() {
@@ -56,9 +32,13 @@ export default class SearchResultPopover extends Component {
         }}
       >
         <ListGroup>
-          {this.state.searchResults &&
-            this.state.searchResults.map(searchResult => (
-              <ListGroupItem href="#" header={searchResult.title}>
+          {this.props.searchResults &&
+            this.props.searchResults.map(searchResult => (
+              <ListGroupItem
+                key={searchResult.id}
+                href="#"
+                header={searchResult.title}
+              >
                 {searchResult.headline}
               </ListGroupItem>
             ))}
