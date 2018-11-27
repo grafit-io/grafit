@@ -4,6 +4,16 @@ from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
+from django.db.models import signals
+from django.dispatch import receiver
+from django.db import connection
+
+import logging
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.StreamHandler())
 
 
 class User(AbstractUser):
@@ -46,6 +56,14 @@ class Article(models.Model):
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
+
+
+@receiver([signals.post_save, signals.post_delete], sender=Article, dispatch_uid="update_search_index")
+def update_search_index(sender, instance, **kwargs):
+    logger.info("update search index")
+    cursor = connection.cursor()
+    cursor.execute('REFRESH MATERIALIZED VIEW CONCURRENTLY grafit_search_index;')
+    logger.info("finished updating search index")
 
 
 class ArticleRel(StructuredRel):
