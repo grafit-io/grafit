@@ -69,7 +69,7 @@ class ArticleList extends Component {
                     <span className="badge badge-info">{related.title}</span>
                   </Link>
                 ))}
-                <p>{article.text}</p>
+                <p>{article.shorttext}</p>
               </div>
             ))}
         {this.state.loadMore && (

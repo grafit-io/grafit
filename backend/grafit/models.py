@@ -1,6 +1,8 @@
 import uuid
 from datetime import datetime
 
+from textblob import TextBlob
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
@@ -39,10 +41,8 @@ class Article(models.Model):
     @property
     def related(self):
         relatedNodes = []
-
         try:
             relatedGraphNodes = GraphArticle.nodes.get(uid=self.id).related
-
             for node in relatedGraphNodes:
                 relatedNodes.append({
                     "id": int(node.uid),
@@ -53,6 +53,11 @@ class Article(models.Model):
             pass
 
         return relatedNodes
+
+    @property
+    def shorttext(self):
+        blob = TextBlob(self.text)
+        return " ".join([str(s) for s in blob.sentences[:3]])
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)

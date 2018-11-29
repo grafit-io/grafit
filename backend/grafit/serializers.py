@@ -47,7 +47,7 @@ class SearchResultSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('id', 'url', 'title', 'text',
+        fields = ('id', 'url', 'title', 'text', 'shorttext',
                   'related', 'workspace', 'created_at', 'updated_at')
 
     def _save_related(self, article):
