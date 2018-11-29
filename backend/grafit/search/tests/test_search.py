@@ -30,8 +30,8 @@ class SearchTest(TestCase):
 
 class SearchAPITest(APITestCase):
     def setUp(self):
-        test_user = User.objects.create_user('testuser', 'test@example.com', 'testpassword')
-        workspace = Workspace(name="Testworkspace", initials="TE")
+        test_user = User.objects.create_user('testuser2', 'test@example.com', 'testpassword')
+        workspace = Workspace(name="Testworkspace2", initials="TE")
         workspace.save()
         workspace.users.add(test_user)
 
@@ -39,7 +39,7 @@ class SearchAPITest(APITestCase):
             Article.objects.create(title="TestTitle", text="TestText", workspace=workspace)
 
         self.client = APIClient()
-        self.user = User.objects.get(username='testuser')
+        self.user = User.objects.get(username='testuser2')
         self.client.force_authenticate(user=self.user)
 
     def test_search_limit(self):

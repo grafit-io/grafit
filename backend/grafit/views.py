@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer, SearchResultSerializer
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .concept_runner import ConceptRunner
@@ -46,6 +47,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
+    pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         user = self.request.user

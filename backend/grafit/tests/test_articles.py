@@ -17,16 +17,33 @@ class ArticleTest(APITestCase):
         self.client = APIClient()
         self.user = User.objects.get(username='testuser')
         self.client.force_authenticate(user=self.user)
+        self.workspace = workspace
 
     def test_article_list(self):
-        response = self.client.get(
+        raw_response = self.client.get(
             reverse('article-list'),
             format="json")
+        response = raw_response.data['results']
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), Article.objects.filter(workspace__users=self.user).count())
-        self.assertEqual(response.data[0]['title'], "TestTitle")
-        self.assertEqual(response.data[0]['text'], "TestText")
+        self.assertEqual(raw_response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response), Article.objects.filter(workspace__users=self.user).count())
+        self.assertEqual(response[0]['title'], "TestTitle")
+        self.assertEqual(response[0]['text'], "TestText")
+
+    def test_article_list_pagination(self):
+
+        for i in range(0, 200):
+            Article.objects.create(title="TestTitle", text="TestText", workspace=self.workspace)
+
+        raw_response = self.client.get(
+            reverse('article-list'),
+            format="json")
+        response = raw_response.data['results']
+
+        self.assertEqual(raw_response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response), min(Article.objects.filter(workspace__users=self.user).count(), 100))
+        self.assertEqual(response[0]['title'], "TestTitle")
+        self.assertEqual(response[0]['text'], "TestText")
 
     def test_article_list_workspace_permission(self):
         other_user = User.objects.create_user('test2', 'test2@example.com', 'testpassword')
@@ -36,12 +53,13 @@ class ArticleTest(APITestCase):
 
         Article.objects.create(title="TestTitle2", text="TestText2", workspace=other_workspace)
 
-        response = self.client.get(
+        raw_response = self.client.get(
             reverse('article-list'),
             format="json")
+        response = raw_response.data['results']
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), Article.objects.filter(workspace__users=self.user).count())
+        self.assertEqual(raw_response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response), Article.objects.filter(workspace__users=self.user).count())
 
     def test_article_create(self):
         url = reverse('article-list')
