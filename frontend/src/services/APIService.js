@@ -92,8 +92,8 @@ function callDeleteAPI(apiEndpoint) {
   });
 }
 
-function getArticles() {
-  return callGetAPI(ARTICLE_ENDPOINT).catch(error => console.log(error));
+function getArticles(offset = 0) {
+  return callGetAPI(ARTICLE_ENDPOINT + "?offset=" + offset).catch(console.log);
 }
 
 function getArticle(id) {

@@ -5,7 +5,6 @@ import { APIService } from "../../services/APIService";
 
 class ArticleUpdate extends ArticleEdit {
   handleSubmit = () => {
-    console.log(this.state.article);
     APIService.updateArticle(
       this.state.article.id,
       this.state.article.title,

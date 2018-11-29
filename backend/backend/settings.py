@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'timed_auth_token.authentication.TimedAuthTokenAuthentication',
     ),
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 25
 }
 
 CORS_ORIGIN_WHITELIST = (

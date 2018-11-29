@@ -51,7 +51,14 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Article.objects.filter(workspace__users=user).order_by('-updated_at')
+        return Article.objects.filter(workspace__users=user)
+
+    def list(self, request):
+        articles = self.filter_queryset(Article.objects.filter(
+            workspace__users=request.user).exclude(text__exact="").order_by('-updated_at'))
+        page = self.paginate_queryset(articles)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
 
 
 class WorkspaceViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin,

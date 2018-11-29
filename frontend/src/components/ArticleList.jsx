@@ -6,13 +6,23 @@ import { Button } from "react-bootstrap";
 class ArticleList extends Component {
   state = {
     articles: [],
-    deletedId: undefined
+    deletedId: undefined,
+    offset: 0,
+    loadMore: false
   };
 
   loadArticles = () => {
-    APIService.getArticles()
-      .then(articles => {
-        this.setState({ articles: articles });
+    APIService.getArticles(this.state.offset)
+      .then(response => {
+        this.setState({
+          offset: this.state.offset + response.results.length,
+          articles: this.state.articles.concat(response.results)
+        });
+        if (this.state.offset < response.count) {
+          this.setState({ loadMore: true });
+        } else {
+          this.setState({ loadMore: false });
+        }
       })
       .catch(console.log);
   };
@@ -62,6 +72,11 @@ class ArticleList extends Component {
                 <p>{article.text}</p>
               </div>
             ))}
+        {this.state.loadMore && (
+          <Button bsStyle="default" onClick={this.loadArticles}>
+            Load More
+          </Button>
+        )}
       </div>
     );
   }

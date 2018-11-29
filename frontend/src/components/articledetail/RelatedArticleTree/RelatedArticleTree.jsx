@@ -24,7 +24,6 @@ export default class RelatedArticleTree extends Component {
       nextProps.article.id &&
       nextProps.article.id !== this.props.article.id
     ) {
-      console.log(nextProps.article);
       this.setState({
         treebeardData: this.getTreebeardData(nextProps.article)
       });
@@ -32,7 +31,7 @@ export default class RelatedArticleTree extends Component {
   }
 
   getTreebeardData = article => {
-    let result = {
+    return {
       id: article.id,
       name: article.title,
       toggled: true,
@@ -41,8 +40,6 @@ export default class RelatedArticleTree extends Component {
       ),
       level: 0
     };
-    console.log(result);
-    return result;
   };
 
   onToggle = (node, toggled) => {

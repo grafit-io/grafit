@@ -41,7 +41,7 @@ class ArticleTest(APITestCase):
         response = raw_response.data['results']
 
         self.assertEqual(raw_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response), min(Article.objects.filter(workspace__users=self.user).count(), 100))
+        self.assertEqual(len(response), min(Article.objects.filter(workspace__users=self.user).count(), 25))
         self.assertEqual(response[0]['title'], "TestTitle")
         self.assertEqual(response[0]['text'], "TestText")
 
