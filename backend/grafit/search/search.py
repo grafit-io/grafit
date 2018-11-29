@@ -35,6 +35,7 @@ class Search:
             FROM grafit_search_index
             INNER  JOIN grafit_article  ON grafit_article.id = grafit_search_index.id
             WHERE grafit_search_index.document @@ to_tsquery('english', %(query)s)
-            ORDER BY rank DESC ''', {'query': cleanSearchTerm})
+            ORDER BY rank DESC 
+            LIMIT 25''', {'query': cleanSearchTerm})
 
         return queryset

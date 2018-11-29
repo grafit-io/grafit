@@ -11,7 +11,7 @@ router.register(r'users', views.UserCreateViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'articles', views.ArticleViewSet, basename="article")
 router.register(r'workspaces', views.WorkspaceViewSet, basename="workspace")
-router.register(r'search', views.SearchResultViewSet, basename="serach")
+router.register(r'search', views.SearchResultViewSet, basename="search")
 
 
 urlpatterns = [
