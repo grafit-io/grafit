@@ -71,8 +71,17 @@ class Article(models.Model):
 def update_search_index(sender, instance, **kwargs):
     logger.info("update search index")
     cursor = connection.cursor()
-    cursor.execute('REFRESH MATERIALIZED VIEW CONCURRENTLY grafit_search_index;')
+    cursor.execute(
+        'REFRESH MATERIALIZED VIEW CONCURRENTLY grafit_search_index;')
     logger.info("finished updating search index")
+
+@receiver([signals.post_save, signals.post_delete], sender=Article, dispatch_uid="update_search_word")
+def update_search_word(sender, instance, **kwargs):
+    logger.info("update search word")
+    cursor = connection.cursor()
+    cursor.execute(
+        'REFRESH MATERIALIZED VIEW CONCURRENTLY grafit_search_word;')
+    logger.info("finished updating search word")
 
 
 class ArticleRel(StructuredRel):
@@ -97,3 +106,12 @@ class SearchResult(models.Model):
     class Meta:
         managed = False
         db_table = 'search_index'
+
+
+class SearchWord(models.Model):
+    word = models.TextField(primary_key=True)
+    similarity = models.DecimalField(max_digits=19, decimal_places=2)
+
+    class Meta:
+        managed = False
+        db_table = 'search_word'
