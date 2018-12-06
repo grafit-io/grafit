@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { APIService } from "../../services/APIService";
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { APIService } from "../../../services/APIService";
 import { Button, ButtonToolbar } from "react-bootstrap";
-import RelatedArticleTree from "./RelatedArticleTree/RelatedArticleTree";
+import RelatedArticleTree from "../relatedarticletree/RelatedArticleTree";
 import ArticleCreate from "./ArticleCreate";
 import ArticleUpdate from "./ArticleUpdate";
+import RelatedArticleBadges from "../RelatedArticleBadges";
 
 class ArticleDetail extends Component {
   state = {
@@ -73,10 +74,6 @@ class ArticleDetail extends Component {
     });
   };
 
-  deleteRelated = relatedArticle => {
-    console.log("delete: " + relatedArticle.title);
-  };
-
   render() {
     if (this.state.redirectDeleted) {
       return (
@@ -133,40 +130,10 @@ class ArticleDetail extends Component {
                 </Button>
               </ButtonToolbar>
               <br />
-              {this.state.article.related.map(relatedArticle => (
-                <Fragment>
-                  <span className="badge badge-info">
-                    <Link
-                      to={`/articles/${relatedArticle.id}`}
-                      key={relatedArticle.id}
-                      style={{ fontWeight: 700, color: "#fff" }}
-                    >
-                      {relatedArticle.title}
-                    </Link>
-                    <Button
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            "Are you sure you wish to delete this item?"
-                          )
-                        )
-                          this.deleteRelated(relatedArticle);
-                      }}
-                      style={{
-                        marginLeft: 5,
-                        padding: "0px 2px",
-                        lineHeight: 1,
-                        verticalAlign: "middle",
-                        fontWeight: 700,
-                        fontSize: 12,
-                        textAlign: "center"
-                      }}
-                    >
-                      x
-                    </Button>
-                  </span>
-                </Fragment>
-              ))}
+              <RelatedArticleBadges
+                relatedArticles={this.state.article.related}
+                deletable
+              />
               <p>{this.state.article.text}</p>
               <RelatedArticleTree article={this.state.article} />
             </div>

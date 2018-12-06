@@ -1,7 +1,7 @@
 import { withRouter } from "react-router-dom";
 
 import ArticleEdit from "./ArticleEdit";
-import { APIService } from "../../services/APIService";
+import { APIService } from "../../../services/APIService";
 
 class ArticleUpdate extends ArticleEdit {
   handleSubmit = () => {

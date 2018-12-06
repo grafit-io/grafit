@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { APIService } from "../services/APIService";
+import { APIService } from "../../services/APIService";
 import { Button } from "react-bootstrap";
+import RelatedArticleBadges from "./RelatedArticleBadges";
 
 class ArticleList extends Component {
   state = {
@@ -64,11 +65,7 @@ class ArticleList extends Component {
                 <Link to={`/articles/${article.id}`}>
                   <h2>{article.title}</h2>
                 </Link>
-                {article.related.map(related => (
-                  <Link to={`/articles/${related.id}`} key={related.id}>
-                    <span className="badge badge-info">{related.title}</span>
-                  </Link>
-                ))}
+                <RelatedArticleBadges relatedArticles={article.related} />
                 <p>{article.shorttext}</p>
               </div>
             ))}

@@ -5,8 +5,8 @@ import {
   Redirect,
   Switch
 } from "react-router-dom";
-import ArticleList from "./components/ArticleList";
-import ArticleDetail from "./components/articledetail/ArticleDetail";
+import ArticleList from "./components/article/ArticleList";
+import ArticleDetail from "./components/article/articledetail/ArticleDetail";
 import Login from "./components/login/Login";
 import Register from "./components/login/Register";
 import Nagivation from "./components/navigation/Navigation";
