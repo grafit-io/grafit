@@ -55,10 +55,11 @@ class ConceptRunner:
                 f"Set {article_node.name} as related to {related_article_node.name}")
 
             if article_node.related.is_connected(related_article_node):
-                article_node.related.disconnect(related_article_node)
-
-            article_node.related.connect(
-                related_article_node, {'tf_idf': keyword['tf-idf']})
+                rel = article_node.related.relationship(related_article_node)
+                rel.tf_idf = keyword['tf-idf']
+            else:
+                article_node.related.connect(
+                    related_article_node, {'tf_idf': keyword['tf-idf']})
 
     @classmethod
     def generate_graph(cls):
