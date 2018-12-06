@@ -57,11 +57,11 @@ class Article(models.Model):
     @property
     def shorttext(self):
         blob = TextBlob(self.text)
-        firstTwoSentences = " ".join([str(s) for s in blob.sentences[:3]])
-        if len(firstTwoSentences) > 400:
+        firstSentences = " ".join([str(s) for s in blob.sentences[:3]])
+        if len(firstSentences) > 400:
             return self.text[:400].rsplit(' ', 1)[0] + " [...]"
         else:
-            return firstTwoSentences
+            return firstSentences
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
