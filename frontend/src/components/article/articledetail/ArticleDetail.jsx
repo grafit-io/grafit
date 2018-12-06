@@ -110,26 +110,34 @@ class ArticleDetail extends Component {
         <div>
           {this.state.article && (
             <div>
-              <h2>{this.state.article.title}</h2>
-              <ButtonToolbar>
-                <Button bsStyle="primary" onClick={this.handleClick}>
-                  Edit
-                </Button>
-                <Button
-                  bsStyle="danger"
-                  onClick={() => {
-                    if (
-                      window.confirm(
-                        "Are you sure you wish to delete this item?"
-                      )
-                    )
-                      this.deleteItem();
+              <div>
+                <h2 style={{ display: "inline-block" }}>
+                  {this.state.article.title}
+                </h2>
+
+                <ButtonToolbar
+                  style={{
+                    float: "right"
                   }}
                 >
-                  Delete
-                </Button>
-              </ButtonToolbar>
-              <br />
+                  <Button bsStyle="primary" onClick={this.handleClick}>
+                    Edit
+                  </Button>
+                  <Button
+                    bsStyle="danger"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you wish to delete this item?"
+                        )
+                      )
+                        this.deleteItem();
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </ButtonToolbar>
+              </div>
               <RelatedArticleBadges
                 relatedArticles={this.state.article.related}
                 deletable
