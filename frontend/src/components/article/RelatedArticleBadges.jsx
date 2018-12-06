@@ -2,9 +2,12 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
+import { APIService } from "../../services/APIService";
+
 export default class RelatedArticleBadges extends Component {
   deleteRelated = relatedArticle => {
-    console.log("delete: " + relatedArticle.title);
+    APIService.deleteRelated(this.props.currentArticle.id, relatedArticle.id);
+    this.props.removeRelated(relatedArticle.id);
   };
 
   render() {

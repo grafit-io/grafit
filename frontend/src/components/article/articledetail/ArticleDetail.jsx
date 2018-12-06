@@ -74,6 +74,16 @@ class ArticleDetail extends Component {
     });
   };
 
+  removeRelated = id => {
+    let related = this.state.article.related.filter(
+      related => related.id !== id
+    );
+
+    let article = { ...this.state.article };
+    article.related = related;
+    this.setState({ article });
+  };
+
   render() {
     if (this.state.redirectDeleted) {
       return (
@@ -139,7 +149,9 @@ class ArticleDetail extends Component {
                 </ButtonToolbar>
               </div>
               <RelatedArticleBadges
+                currentArticle={this.state.article}
                 relatedArticles={this.state.article.related}
+                removeRelated={this.removeRelated}
                 deletable
               />
               <p>{this.state.article.text}</p>

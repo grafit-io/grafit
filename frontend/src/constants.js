@@ -17,3 +17,4 @@ export const ARTICLE_ENDPOINT = "articles/";
 export const USER_ENDPOINT = "users/";
 export const WORKSPACE_ENDPOINT = "workspaces/";
 export const SEARCH_ENDPOINT = "search/?searchTerm=";
+export const HIDE_ENDPOINT = "hideconcept";

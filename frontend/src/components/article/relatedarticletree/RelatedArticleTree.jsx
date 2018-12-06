@@ -19,10 +19,11 @@ export default class RelatedArticleTree extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps &&
-      nextProps.article &&
-      nextProps.article.id &&
-      nextProps.article.id !== this.props.article.id
+      (nextProps &&
+        nextProps.article &&
+        nextProps.article.id &&
+        nextProps.article.id !== this.props.article.id) ||
+      nextProps.article.related !== this.props.article.related
     ) {
       this.setState({
         treebeardData: this.getTreebeardData(nextProps.article)
