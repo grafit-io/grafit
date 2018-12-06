@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { APIService } from "../../services/APIService";
 import { Button, ButtonToolbar } from "react-bootstrap";
@@ -73,6 +73,10 @@ class ArticleDetail extends Component {
     });
   };
 
+  deleteRelated = relatedArticle => {
+    console.log("delete: " + relatedArticle.title);
+  };
+
   render() {
     if (this.state.redirectDeleted) {
       return (
@@ -130,14 +134,38 @@ class ArticleDetail extends Component {
               </ButtonToolbar>
               <br />
               {this.state.article.related.map(relatedArticle => (
-                <Link
-                  to={`/articles/${relatedArticle.id}`}
-                  key={relatedArticle.id}
-                >
+                <Fragment>
                   <span className="badge badge-info">
-                    {relatedArticle.title}
+                    <Link
+                      to={`/articles/${relatedArticle.id}`}
+                      key={relatedArticle.id}
+                      style={{ fontWeight: 700, color: "#fff" }}
+                    >
+                      {relatedArticle.title}
+                    </Link>
+                    <Button
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "Are you sure you wish to delete this item?"
+                          )
+                        )
+                          this.deleteRelated(relatedArticle);
+                      }}
+                      style={{
+                        marginLeft: 5,
+                        padding: "0px 2px",
+                        lineHeight: 1,
+                        verticalAlign: "middle",
+                        fontWeight: 700,
+                        fontSize: 12,
+                        textAlign: "center"
+                      }}
+                    >
+                      x
+                    </Button>
                   </span>
-                </Link>
+                </Fragment>
               ))}
               <p>{this.state.article.text}</p>
               <RelatedArticleTree article={this.state.article} />
