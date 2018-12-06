@@ -103,3 +103,29 @@ class ConceptRunnerAPI(APIView):
             return Response(status.HTTP_200_OK)
         except:
             return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class HideConceptAPI(APIView):
+    def post(self, request):
+
+        if "from" in request.data and "to" in request.data:
+            fromId = request.data["from"]
+            toId = request.data["to"]
+
+            try:
+                article_node_from = GraphArticle.nodes.get_or_none(uid=fromId)
+                article_node_to = GraphArticle.nodes.get_or_none(uid=toId)
+
+                if not article_node_from or not article_node_to:
+                    return Response(status.HTTP_404_NOT_FOUND)
+                else:
+                    rel = article_node_from.related.relationship(article_node_to)
+                    rel.hidden = True
+                    rel.save()
+                    return Response(rel.hidden)
+
+            except:
+                return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        else:
+            return Response(status.HTTP_404_NOT_FOUND)

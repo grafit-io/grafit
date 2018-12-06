@@ -5,7 +5,7 @@ from textblob import TextBlob
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
+from neomodel import BooleanProperty, StructuredNode, StringProperty, UniqueIdProperty, Relationship, StructuredRel, FloatProperty, DateTimeProperty
 from django.db.models import signals
 from django.dispatch import receiver
 from django.db import connection
@@ -42,12 +42,15 @@ class Article(models.Model):
     def related(self):
         relatedNodes = []
         try:
-            relatedGraphNodes = GraphArticle.nodes.get(uid=self.id).related
+            ownNode = GraphArticle.nodes.get(uid=self.id)
+            relatedGraphNodes = ownNode.related
             for node in relatedGraphNodes:
-                relatedNodes.append({
-                    "id": int(node.uid),
-                    "title": node.name
-                })
+                rel = ownNode.related.relationship(node)
+                if not rel.hidden:
+                    relatedNodes.append({
+                        "id": int(node.uid),
+                        "title": node.name
+                    })
         except:
             # article node does not exist yet
             pass
@@ -75,6 +78,7 @@ def update_search_index(sender, instance, **kwargs):
         'REFRESH MATERIALIZED VIEW CONCURRENTLY grafit_search_index;')
     logger.info("finished updating search index")
 
+
 @receiver([signals.post_save, signals.post_delete], sender=Article, dispatch_uid="update_search_word")
 def update_search_word(sender, instance, **kwargs):
     logger.info("update search word")
@@ -89,6 +93,7 @@ class ArticleRel(StructuredRel):
         default=lambda: datetime.now()
     )
     tf_idf = FloatProperty()
+    hidden = BooleanProperty(default=False)
 
 
 class GraphArticle(StructuredNode):
