@@ -1,5 +1,6 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from .concept_runner import ConceptRunner
 
 from .models import User, Article, Workspace, GraphArticle, SearchResult, SearchWord
@@ -61,6 +62,13 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = ('id', 'url', 'title', 'text', 'shorttext',
                   'related', 'workspace', 'created_at', 'updated_at')
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Article.objects.all(),
+                fields=('title', 'workspace')
+            )
+        ]
 
     def _save_related(self, article):
         ConceptRunner.generate_concepts_for_article(article.id)
