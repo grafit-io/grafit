@@ -6,6 +6,7 @@ import {
   USER_ENDPOINT,
   WORKSPACE_ENDPOINT,
   SEARCH_ENDPOINT,
+  ADDRELATED_ENDPOINT,
   HIDE_ENDPOINT
 } from "../constants";
 
@@ -21,6 +22,7 @@ export const APIService = {
   createWorkspace,
   createUser,
   getSearchResults,
+  addRelated,
   deleteRelated
 };
 
@@ -170,6 +172,13 @@ function createUser(username, password, firstname, lastname, email) {
 
 function getSearchResults(query) {
   return callGetAPI(SEARCH_ENDPOINT + query).catch(error => console.log(error));
+}
+
+function addRelated(from, to) {
+  return callPostAPI(ADDRELATED_ENDPOINT, {
+    from: from,
+    to: to
+  }).catch(console.log);
 }
 
 function deleteRelated(from, to) {

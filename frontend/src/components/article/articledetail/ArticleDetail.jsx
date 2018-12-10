@@ -5,7 +5,7 @@ import { Button, ButtonToolbar } from "react-bootstrap";
 import RelatedArticleTree from "../relatedarticletree/RelatedArticleTree";
 import ArticleCreate from "./ArticleCreate";
 import ArticleUpdate from "./ArticleUpdate";
-import RelatedArticleBadges from "../RelatedArticleBadges";
+import RelatedTags from "../relatedarticletags/RelatedTags";
 
 class ArticleDetail extends Component {
   state = {
@@ -76,9 +76,15 @@ class ArticleDetail extends Component {
 
   removeRelated = id => {
     let related = this.state.article.related.filter(
-      related => related.id !== id
+      related => related.id !== parseInt(id)
     );
+    let article = { ...this.state.article };
+    article.related = related;
+    this.setState({ article });
+  };
 
+  addRelated = relatedArticle => {
+    const related = [...this.state.article.related, relatedArticle];
     let article = { ...this.state.article };
     article.related = related;
     this.setState({ article });
@@ -148,11 +154,12 @@ class ArticleDetail extends Component {
                   </Button>
                 </ButtonToolbar>
               </div>
-              <RelatedArticleBadges
+              <RelatedTags
+                currentWorkspace={this.props.currentWorkspace}
                 currentArticle={this.state.article}
                 relatedArticles={this.state.article.related}
                 removeRelated={this.removeRelated}
-                deletable
+                addRelated={this.addRelated}
               />
               <p>{this.state.article.text}</p>
               <RelatedArticleTree article={this.state.article} />
