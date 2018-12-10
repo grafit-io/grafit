@@ -50,6 +50,12 @@ class SearchWordSerializer(serializers.ModelSerializer):
         fields = ('word', 'similarity')
 
 
+class ArticleTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ('id', 'url', 'title', 'workspace')
+
+
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article

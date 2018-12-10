@@ -1,6 +1,6 @@
 import time
 from django.contrib.auth.models import Group
-from .serializers import UserSerializer, GroupSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer, SearchResultSerializer
+from .serializers import UserSerializer, GroupSerializer, ArticleTitleSerializer, CreateUserSerializer, ArticleSerializer, WorkspaceSerializer, SearchResultSerializer
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
 from rest_framework.pagination import LimitOffsetPagination
@@ -43,6 +43,14 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class ArticleTitleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    serializer_class = ArticleTitleSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Article.objects.filter(workspace__users=user)
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
