@@ -96,6 +96,7 @@ class RelatedTags extends Component {
           minQueryLength={1}
           handleTagClick={this.handleTagClick}
           labelField={"title"}
+          autofocus={false}
         />
       </div>
     );
