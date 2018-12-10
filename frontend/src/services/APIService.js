@@ -2,6 +2,7 @@ import { AuthService } from "./AuthService";
 import {
   API,
   ARTICLE_ENDPOINT,
+  ARTICLETITLE_ENDPOINT,
   USER_ENDPOINT,
   WORKSPACE_ENDPOINT,
   SEARCH_ENDPOINT,
@@ -15,6 +16,7 @@ export const APIService = {
   updateArticle,
   createArticle,
   deleteArticle,
+  getArticleTitles,
   getWorkspaces,
   createWorkspace,
   createUser,
@@ -122,6 +124,10 @@ function createArticle(title, text, workspace) {
 
 function deleteArticle(id) {
   return callDeleteAPI(ARTICLE_ENDPOINT + id);
+}
+
+function getArticleTitles() {
+  return callGetAPI(ARTICLETITLE_ENDPOINT).catch(console.log);
 }
 
 function getWorkspaces() {

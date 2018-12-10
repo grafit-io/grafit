@@ -6,11 +6,26 @@ import {
   FormControl,
   HelpBlock
 } from "react-bootstrap";
+import { APIService } from "../../../services/APIService";
 
 export default class ArticleEdit extends Component {
   constructor(props) {
     super(props);
-    this.state = { article: props.article };
+    this.state = { article: props.article, titles: [] };
+  }
+
+  componentDidMount() {
+    APIService.getArticleTitles().then(titles =>
+      this.setState({
+        titles: titles
+          .filter(
+            el =>
+              el.workspace === this.props.currentWorkspace &&
+              el.id !== this.state.article.id
+          )
+          .map(el => el.title)
+      })
+    );
   }
 
   handleChange = evt => {
@@ -20,7 +35,10 @@ export default class ArticleEdit extends Component {
   };
 
   getValidationState = () => {
-    if (this.state.article.title.length > 3) {
+    if (
+      this.state.article.title.length > 3 &&
+      !this.state.titles.includes(this.state.article.title)
+    ) {
       return "success";
     } else {
       return "error";

@@ -14,6 +14,7 @@ export const API = BASE_URL + "api/v1/";
 export const JWT_LOCALSTOR_KEY = "jwt";
 
 export const ARTICLE_ENDPOINT = "articles/";
+export const ARTICLETITLE_ENDPOINT = "articletitless";
 export const USER_ENDPOINT = "users/";
 export const WORKSPACE_ENDPOINT = "workspaces/";
 export const SEARCH_ENDPOINT = "search/?searchTerm=";
