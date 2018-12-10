@@ -22,6 +22,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/runner', views.ConceptRunnerAPI.as_view()),
     path('api/v1/hideconcept', views.HideConceptAPI.as_view()),
+    path('api/v1/addconcept', views.AddConceptAPI.as_view()),
 
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter
