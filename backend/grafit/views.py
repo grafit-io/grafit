@@ -119,6 +119,10 @@ class AddConceptAPI(APIView):
             fromId = request.data["from"]
             toId = request.data["to"]
 
+            label = "unlabeled"
+            if "label" in request.data:
+                label = request.data["label"]
+
             try:
                 article_node_from = GraphArticle.nodes.get_or_none(uid=fromId)
                 article_node_to = GraphArticle.nodes.get_or_none(uid=toId)
@@ -133,7 +137,7 @@ class AddConceptAPI(APIView):
                         rel.save()
                     else:
                         article_node_from.related.connect(
-                            article_node_to, {'tf_idf': 0})
+                            article_node_to, {'tf_idf': 0, 'label': label})
                     return Response(status.HTTP_201_CREATED)
 
             except:

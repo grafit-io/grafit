@@ -94,6 +94,7 @@ class ArticleRel(StructuredRel):
     )
     tf_idf = FloatProperty()
     hidden = BooleanProperty(default=False)
+    label = StringProperty()
 
 
 class GraphArticle(StructuredNode):

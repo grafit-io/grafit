@@ -15,8 +15,8 @@ class RelatedTags extends Component {
         suggestions: titles
           .filter(
             el =>
-              el.workspace === this.props.currentWorkspace &&
-              el.id !== this.props.currentArticle.id
+              el.workspace === this.props.currentWorkspace ||
+              el.id === this.props.currentArticle.id
           )
           .map(el => {
             return { id: String(el.id), title: el.title };
@@ -37,6 +37,16 @@ class RelatedTags extends Component {
   };
 
   handleAddition = tag => {
+    console.log(tag);
+
+    var label;
+    var input = prompt("Please enter a label for this connection:", "Author");
+    if (input === null || input === "") {
+      label = "";
+    } else {
+      label = input;
+    }
+
     // check if duplicate tag
     if (
       !this.props.relatedArticles.find(article => article.title === tag.title)
@@ -51,7 +61,8 @@ class RelatedTags extends Component {
         ).then(relatedArticle => {
           APIService.addRelated(
             this.props.currentArticle.id,
-            relatedArticle.id
+            relatedArticle.id,
+            label
           );
           this.props.addRelated({
             id: relatedArticle.id,
@@ -62,7 +73,8 @@ class RelatedTags extends Component {
         APIService.getArticle(tag.id).then(relatedArticle => {
           APIService.addRelated(
             this.props.currentArticle.id,
-            relatedArticle.id
+            relatedArticle.id,
+            label
           );
           this.props.addRelated({
             id: relatedArticle.id,

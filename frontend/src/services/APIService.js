@@ -174,10 +174,11 @@ function getSearchResults(query) {
   return callGetAPI(SEARCH_ENDPOINT + query).catch(error => console.log(error));
 }
 
-function addRelated(from, to) {
+function addRelated(from, to, label) {
   return callPostAPI(ADDRELATED_ENDPOINT, {
     from: from,
-    to: to
+    to: to,
+    label: label
   }).catch(console.log);
 }
 
