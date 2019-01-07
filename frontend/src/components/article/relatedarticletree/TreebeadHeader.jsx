@@ -19,12 +19,21 @@ class Header extends React.Component {
 
     return (
       <div style={style.base}>
-        <div
-          style={{ ...style.title, cursor: "pointer" }}
-          onClick={e => this.handleClick(node.id, e)}
-        >
-          {node.name}
-        </div>
+        {!node.label && (
+          <div
+            style={{ ...style.title, cursor: "pointer" }}
+            onClick={e => this.handleClick(node.id, e)}
+          >
+            {node.name}
+          </div>
+        )}
+        {node.label && (
+          <div>
+            <i>
+              <b>{node.name}</b>
+            </i>
+          </div>
+        )}
       </div>
     );
   }

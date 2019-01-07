@@ -42,7 +42,7 @@ class RelatedTags extends Component {
     var label;
     var input = prompt("Please enter a label for this connection:", "Author");
     if (input === null || input === "") {
-      label = "";
+      label = null;
     } else {
       label = input;
     }
@@ -99,23 +99,23 @@ class RelatedTags extends Component {
       existingLabel
     );
     if (input === null || input === "") {
-      label = "";
+      label = null;
     } else {
       label = input;
-      const artilceId = this.props.currentArticle.id;
-      const relatedArticleId = this.props.relatedArticles[id].id;
-
-      console.log(
-        `adding new labelname ${label} to existing connection between ${relatedArticleId} and ${artilceId}`
-      );
-
-      APIService.addRelated(artilceId, relatedArticleId, label);
-      this.props.updateRelated({
-        id: this.props.relatedArticles[id].id,
-        title: this.props.relatedArticles[id].title,
-        label: label
-      });
     }
+    const artilceId = this.props.currentArticle.id;
+    const relatedArticleId = this.props.relatedArticles[id].id;
+
+    console.log(
+      `adding new labelname ${label} to existing connection between ${relatedArticleId} and ${artilceId}`
+    );
+
+    APIService.addRelated(artilceId, relatedArticleId, label);
+    this.props.updateRelated({
+      id: this.props.relatedArticles[id].id,
+      title: this.props.relatedArticles[id].title,
+      label: label
+    });
   };
 
   render() {

@@ -31,7 +31,18 @@ export default class RelatedArticleTree extends Component {
     }
   }
 
+  unique(array) {
+    return array.filter(function(a) {
+      return !this[a] ? (this[a] = true) : false;
+    }, {});
+  }
+
   getTreebeardData = async article => {
+    const labels = this.unique(article.related.map(article => article.label));
+    console.log(labels);
+
+    let labelChildren = {};
+
     let children = await Promise.all(
       article.related.map(async related => {
         let children = [];
@@ -43,12 +54,36 @@ export default class RelatedArticleTree extends Component {
       })
     );
 
+    labels.forEach(label => {
+      let childrenIds = article.related
+        .filter(article => article.label === label)
+        .map(article => article.id);
+      labelChildren[label] = children.filter(child =>
+        childrenIds.includes(child.id)
+      );
+    });
+
+    let labelBasedChildren = [];
+
+    for (const [label, children] of Object.entries(labelChildren)) {
+      const labelName = label === "null" ? "unlabeled" : label;
+      labelBasedChildren.push({
+        parents: [article.id],
+        id: label,
+        label: true,
+        name: labelName,
+        toggled: true,
+        children: children,
+        level: 1
+      });
+    }
+
     return {
       parent: undefined,
       id: article.id,
       name: article.title,
       toggled: true,
-      children: children,
+      children: labelBasedChildren,
       level: 0
     };
   };
