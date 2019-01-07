@@ -49,7 +49,8 @@ class Article(models.Model):
                 if not rel.hidden:
                     relatedNodes.append({
                         "id": int(node.uid),
-                        "title": node.name
+                        "title": node.name,
+                        "label": rel.label
                     })
         except:
             # article node does not exist yet
