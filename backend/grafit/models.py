@@ -9,6 +9,7 @@ from neomodel import BooleanProperty, StructuredNode, StringProperty, UniqueIdPr
 from django.db.models import signals
 from django.dispatch import receiver
 from django.db import connection
+from .crawler.crawler import Crawler
 
 import logging
 
@@ -32,11 +33,18 @@ class Workspace(models.Model):
 
 
 class Article(models.Model):
+
+    def __init__(self, *args, **kwargs):
+        super(Article, self).__init__(*args, **kwargs)
+        self.update_web_content = True
+
     title = models.CharField(max_length=250)
     text = models.TextField(blank=True)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    web_content = models.TextField(null=True, default=None)
+    update_web_content = models.BooleanField(default=True)
 
     @property
     def related(self):
@@ -69,6 +77,14 @@ class Article(models.Model):
 
     def __unicode__(self):
         return '{"title": %s, "title" %s}' % (self.id, self.title)
+
+
+@receiver([signals.post_save], sender=Article, dispatch_uid="crawl_url_in_article")
+def crawl_urls_in_article(sender, instance, created,  **kwargs):
+    if instance.update_web_content:
+        crawler = Crawler()
+        content = crawler.getWebContent(instance.text)
+        Article.objects.filter(id=instance.id).update(web_content=content, update_web_content=False)
 
 
 @receiver([signals.post_save, signals.post_delete], sender=Article, dispatch_uid="update_search_index")

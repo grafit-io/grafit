@@ -79,6 +79,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         return article
 
     def update(self, instance, validated_data):
+        instance.update_web_content = True
         super(ArticleSerializer, self).update(instance, validated_data)
         self._save_related(instance)
         return instance
