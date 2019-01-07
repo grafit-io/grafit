@@ -90,6 +90,17 @@ class ArticleDetail extends Component {
     this.setState({ article });
   };
 
+  updateRelated = relatedArticle => {
+    let article = { ...this.state.article };
+    article.related = [
+      ...this.state.article.related.filter(
+        article => article.id !== relatedArticle.id
+      ),
+      relatedArticle
+    ];
+    this.setState({ article });
+  };
+
   render() {
     if (this.state.redirectDeleted) {
       return (
@@ -160,6 +171,7 @@ class ArticleDetail extends Component {
                 relatedArticles={this.state.article.related}
                 removeRelated={this.removeRelated}
                 addRelated={this.addRelated}
+                updateRelated={this.updateRelated}
               />
               <p>{this.state.article.text}</p>
               <RelatedArticleTree article={this.state.article} />

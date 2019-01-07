@@ -88,8 +88,34 @@ class RelatedTags extends Component {
   };
 
   handleTagClick = id => {
-    const articleId = this.props.relatedArticles[id].id;
-    this.props.history.push(`/articles/${articleId}`);
+    let existingLabel = this.props.relatedArticles[id].label;
+    if (existingLabel === null) {
+      existingLabel = "New Label";
+    }
+
+    let label;
+    let input = prompt(
+      "Please enter a new label for this connection:",
+      existingLabel
+    );
+    if (input === null || input === "") {
+      label = "";
+    } else {
+      label = input;
+      const artilceId = this.props.currentArticle.id;
+      const relatedArticleId = this.props.relatedArticles[id].id;
+
+      console.log(
+        `adding new labelname ${label} to existing connection between ${relatedArticleId} and ${artilceId}`
+      );
+
+      APIService.addRelated(artilceId, relatedArticleId, label);
+      this.props.updateRelated({
+        id: this.props.relatedArticles[id].id,
+        title: this.props.relatedArticles[id].title,
+        label: label
+      });
+    }
   };
 
   render() {

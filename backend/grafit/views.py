@@ -134,6 +134,7 @@ class AddConceptAPI(APIView):
                     rel = article_node_from.related.relationship(article_node_to)
                     if rel:
                         rel.hidden = False
+                        rel.label = label
                         rel.save()
                     else:
                         article_node_from.related.connect(
