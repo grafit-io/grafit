@@ -66,7 +66,8 @@ class RelatedTags extends Component {
           );
           this.props.addRelated({
             id: relatedArticle.id,
-            title: relatedArticle.title
+            title: relatedArticle.title,
+            label: label
           });
         });
       } else {
@@ -78,7 +79,8 @@ class RelatedTags extends Component {
           );
           this.props.addRelated({
             id: relatedArticle.id,
-            title: relatedArticle.title
+            title: relatedArticle.title,
+            label: label
           });
         });
       }
@@ -95,9 +97,13 @@ class RelatedTags extends Component {
       <div>
         <ReactTags
           tags={this.props.relatedArticles.map(relatedArticle => {
+            let label = relatedArticle.label;
+            if (label === null) {
+              label = "unlabeled";
+            }
             return {
               id: String(relatedArticle.id),
-              title: relatedArticle.title
+              title: label + ": " + relatedArticle.title
             };
           })}
           suggestions={this.state.suggestions}
