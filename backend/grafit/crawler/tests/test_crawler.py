@@ -8,6 +8,11 @@ class CrawlerTest(TestCase):
         webContent = crawler.getWebContent("Nothing with any URL")
         self.assertEqual(webContent, "")
 
+    def test_crawler_not_reachable_url(self):
+        crawler = Crawler()
+        webContent = crawler.getWebContent("Not existing URL https://www.dauiwrbn239hraoiwezfh.com/alsdäflqwäekf and some more text")
+        self.assertEqual(webContent, "")
+
     def test_extractUrl_none(self):
         text = ""
         sourceList = Crawler._Crawler__extractURL(text)
