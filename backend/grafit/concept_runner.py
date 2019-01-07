@@ -74,4 +74,4 @@ class ConceptRunner:
         article = Article.objects.get(pk=articleId)
 
         if article:
-            cls._extract_and_save(article, disconnectAll=True)
+            cls._extract_and_save(article, disconnectAll=False)

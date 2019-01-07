@@ -39,6 +39,10 @@ class FakeExtractStrategy(ExtractStrategyAbstract):
         return ["test"]
 
 
+class TextblobTfIdfKeyphraseExtractStrategy(ExtractStrategyAbstract):
+    pass
+
+
 class TextblobTfIdfExtractStrategy(ExtractStrategyAbstract):
 
     def __init__(self, loadFromDB=True):
