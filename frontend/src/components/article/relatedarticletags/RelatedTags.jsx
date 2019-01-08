@@ -124,12 +124,13 @@ class RelatedTags extends Component {
         <ReactTags
           tags={this.props.relatedArticles.map(relatedArticle => {
             let label = relatedArticle.label;
+            let title = label + ": " + relatedArticle.title;
             if (label === null) {
-              label = "unlabeled";
+              title = relatedArticle.title;
             }
             return {
               id: String(relatedArticle.id),
-              title: label + ": " + relatedArticle.title
+              title: title
             };
           })}
           suggestions={this.state.suggestions}
