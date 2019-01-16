@@ -1,10 +1,8 @@
-
-
 # grafit
 
 > Shared Knowledge
 
-[![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit) 
+[![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit)
 [![codecov](https://codecov.io/gh/grafit-io/grafit/branch/master/graph/badge.svg)](https://codecov.io/gh/grafit-io/grafit)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit?ref=badge_shield)
 
@@ -14,9 +12,9 @@ grafit is an MIT-licensed web app that allows teams to store, share and search k
 
 :memo: store text in nodes  
 :collision: text is analysed and relations to other nodes are learned  
-:satellite: urls within the text are crawled an the content is saved  
+:satellite: urls within the text are crawled and the content is saved  
 :mag: full-text search  
-:busts_in_silhouette: workspaces for managing access to group of nodes  
+:busts_in_silhouette: workspaces for managing access to group of nodes
 
 ## Getting started
 
