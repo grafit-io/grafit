@@ -6,3 +6,5 @@ python:
 
 # Don't build any extra formats
 formats: []
+
+requirements_file: mkdocs/requirements.txt
