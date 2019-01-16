@@ -14,6 +14,11 @@ grafit is an MIT-licensed web app that allows teams to store, share and search k
 :mag: full-text search  
 :busts_in_silhouette: workspaces for managing access to group of nodes
 
+## Documentation :notebook:
+
+User and developer documentation is available [here](https://grafit.readthedocs.io/en/latest/).  
+UI-Guidelines are available [here](https://brandguidelines.logojoy.com/grafit-io).
+
 ## Getting started
 
 Install Docker [Mac](https://docs.docker.com/docker-for-mac/install/) / [Windows](https://docs.docker.com/docker-for-windows/install/)
