@@ -17,7 +17,8 @@ docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test
 
 
 ## Documentation :notebook:
-UI-Guidelines are available [here](https://brandguidelines.logojoy.com/grafit-io)
+User and developer documentation is available [here](https://grafit.readthedocs.io/en/latest/).  
+UI-Guidelines are available [here](https://brandguidelines.logojoy.com/grafit-io).
 
 ## CI :construction_worker:
 
