@@ -8,11 +8,11 @@
 
 grafit is an MIT-licensed web app that allows teams to store, share and search knowledge in an effective way. With intelligent relation detection, different data sources are presented and searchable at one central entry point.
 
-## Users
+## User Guide
 
 The user documentation is available [here](userdoc/index.md).
 
-## Developers
+## Developer Guide
 
 The documentation for developers is available [here](developerdoc/quickstart.md).
 If you want to contribute to this project please follow the contributing guidelines [here](https://github.com/grafit-io/grafit/blob/master/CONTRIBUTING.md).
