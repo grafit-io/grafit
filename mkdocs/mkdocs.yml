@@ -7,8 +7,8 @@ dev_addr: 0.0.0.0:8001
 
 nav:
   - Home: "index.md"
-  - Users: "userdoc/index.md"
-  - Developers:
+  - User Guide: "userdoc/index.md"
+  - Developer Guide:
       - Quckstart: "developerdoc/quickstart.md"
       - Containers: "developerdoc/containers.md"
       - API-Authentication: "developerdoc/api/authentication.md"
