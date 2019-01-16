@@ -1,6 +1,4 @@
-# grafit-io
-
-> Shared Knowledge
+![Logo](../img/color_logo_transparent.png)
 
 [![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit)
 [![codecov](https://codecov.io/gh/grafit-io/grafit/branch/master/graph/badge.svg)](https://codecov.io/gh/grafit-io/grafit)
