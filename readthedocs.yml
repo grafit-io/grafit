@@ -3,4 +3,6 @@ build:
 
 python:
   version: 3.6
-  pip_install: true
+
+# Don't build any extra formats
+formats: []
