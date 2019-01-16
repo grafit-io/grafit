@@ -1,5 +1,6 @@
 # Authentication
-For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal "Token", with whitespace separating the two strings. For example:
+
+All requests to the REST-API with the exception of the login request need to be authenticated. For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal "Token", with whitespace separating the two strings. For example:
 
 ```
 Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
@@ -18,6 +19,7 @@ curl -X GET http://127.0.0.1:8000/api/v1/example/ -H 'Authorization: Token 9944b
 ```
 
 ## Retrieving Tokens
+
 Authorization tokens are issued and returned when a user registers. A registered user can also retrieve their token with the following request:
 
 **Request**:
@@ -26,14 +28,15 @@ Authorization tokens are issued and returned when a user registers. A registered
 
 Parameters:
 
-Name | Type | Description
----|---|---
-username | string | The user's username
-password | string | The user's password
+| Name     | Type   | Description         |
+| -------- | ------ | ------------------- |
+| username | string | The user's username |
+| password | string | The user's password |
 
 **Response**:
+
 ```json
-{ 
-    "token" : "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" 
+{
+  "token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
 }
 ```

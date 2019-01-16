@@ -9,10 +9,11 @@ nav:
   - Home: "index.md"
   - Users: "userdoc/index.md"
   - Developers:
-      - Quck Start: "developerdoc/quickstart.md"
+      - Quckstart: "developerdoc/quickstart.md"
       - Containers: "developerdoc/containers.md"
       - API-Authentication: "developerdoc/api/authentication.md"
-      - API-Users: "developerdoc/api/users.md"
+      - Neo4J: "developerdoc/neo4j.md"
+      - CI/ CD: "developerdoc/ci.md"
 
 theme:
   name: readthedocs
