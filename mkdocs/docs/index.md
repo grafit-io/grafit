@@ -1,39 +1,49 @@
 # grafit-io
 
-[![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit) 
+> Shared Knowledge
+
+[![Build Status](https://travis-ci.com/grafit-io/grafit.svg?branch=master)](https://travis-ci.com/grafit-io/grafit)
+[![codecov](https://codecov.io/gh/grafit-io/grafit/branch/master/graph/badge.svg)](https://codecov.io/gh/grafit-io/grafit)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit?ref=badge_shield)
 
-# Prerequisites
+grafit is an MIT-licensed web app that allows teams to store, share and search knowledge in an effective way. With intelligent relation detection, different data sources are presented and searchable at one central entry point.
 
-- Docker [Mac](https://docs.docker.com/docker-for-mac/install/) / [Windows](https://docs.docker.com/docker-for-windows/install/)
+## General/ Features
 
-# Initialize the project
+## Users
 
-Initialize local development environment:
+The user documentation is available [here](userdoc/index.md).
+
+## Developers
+
+The documentation for developers is available [here](developerdoc/quickstart.md).
+If you want to contribute to this project please follow the contributing guidelines [here]().
+
+## Deployment
+
+Grafit can be deployed via a docker-compose file. The prerequisite for this is that you have Docker and Docker-Compose installed on the target machine.  
+Instructions can be found here:  
+Install Docker [Mac](https://docs.docker.com/docker-for-mac/install/) / [Windows](https://docs.docker.com/docker-for-windows/install/)
+
+Once Docker is installed the current production docker-compose file can be downloaded with the following curl command:
 
 ```bash
-# Apply DB migrations
-docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py migrate
-
-# Create a superuser
-docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py createsuperuser
-
-# Start containers
-docker-compose -f docker-compose.dev.yml up
+curl https://raw.githubusercontent.com/grafit-io/grafit/master/docker-compose.yml -o docker-compose.yml
 ```
 
-To generate migration scripts for new database changes run:
+Next all containers can be startet with the docker-compose command:
+
 ```bash
-docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py makemigrations
+docker-compose up
 ```
 
-To run tests:
-```bash
-docker-compose -f docker-compose.dev.yml run --rm backend ./manage.py test
-```
+Once all containers have started the following actions can be taken:
 
+- Go to [http://localhost:3000](http://localhost:3000) to start the app.
+- Go to [http://localhost:8001](http://localhost:8001) to read the docs.
 
-# Continuous Deployment
+More about the different containers can be read [here](developerdoc/containers.md).
 
-Deployment automated via Travis. ... TODO
+## License
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgrafit-io%2Fgrafit?ref=badge_large)
