@@ -4,7 +4,7 @@ repo_url: https://github.com/grafit-io/grafit
 site_dir: site
 copyright: Copyright &copy; 2018, <a href="https://github.com/grafit-io">grafit</a>.
 dev_addr: 0.0.0.0:8001
-docs_dir: "mkdocs/docs/"
+docs_dir: "mkdocs/docs"
 
 nav:
   - Home: "index.md"
