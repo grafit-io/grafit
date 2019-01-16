@@ -1,3 +1,5 @@
+
+
 # grafit
 
 > Shared Knowledge
@@ -9,6 +11,12 @@
 grafit is an MIT-licensed web app that allows teams to store, share and search knowledge in an effective way. With intelligent relation detection, different data sources are presented and searchable at one central entry point.
 
 ## Features
+
+:memo: store text in nodes  
+:collision: text is analysed and relations to other nodes are learned  
+:satellite: urls within the text are crawled an the content is saved  
+:mag: full-text search  
+:busts_in_silhouette: workspaces for managing access to group of nodes  
 
 ## Getting started
 
@@ -24,11 +32,9 @@ Go to [http://localhost:8001](http://localhost:8001) to read the docs.
 
 Go to [http://localhost:3000](http://localhost:3000) to start the app.
 
-## Docker Container
-
-### Configuration
-
 ## Contribute
+
+Berfore contributing, please have a look at our [Code Of Conduct](CODE_OF_CONDUCT.md) and the [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
