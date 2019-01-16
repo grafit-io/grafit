@@ -10,7 +10,7 @@ grafit is an MIT-licensed web app that allows teams to store, share and search k
 
 ## User Guide
 
-The user documentation is available [here](userdoc/index.md).
+The user documentation is available [here](userdoc/signup.md).
 
 ## Developer Guide
 
