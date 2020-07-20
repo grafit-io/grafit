@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             MongoDB provides high availability with replica sets.[9] A replica set consists of two or more copies of the data. Each replica set member may act in the role of primary or secondary replica at any time. All writes and reads are done on the primary replica by default. Secondary replicas maintain a copy of the data of the primary using built-in replication. When a primary replica fails, the replica set automatically conducts an election process to determine which secondary should become the primary. Secondaries can optionally serve read operations, but that data is only eventually consistent by default.
             Load balancing[10]
 
-            MongoDB scales horizontally using sharding. The user chooses a shard key, which determines how the data in a collection will be distributed. The data is split into ranges (based on the shard key) and distributed across multiple shards. (A shard is a master with one or more slaves.). Alternatively, the shard key can be hashed to map to a shard – enabling an even data distribution.
+            MongoDB scales horizontally using sharding. The user chooses a shard key, which determines how the data in a collection will be distributed. The data is split into ranges (based on the shard key) and distributed across multiple shards. (A shard is a main with one or more subordinates.). Alternatively, the shard key can be hashed to map to a shard – enabling an even data distribution.
 
             MongoDB can run over multiple servers, balancing the load or duplicating data to keep the system up and running in case of hardware failure. ');
             INSERT INTO grafit_article (id, title, text) VALUES (3, 'NoSQL', 'A NoSQL (originally referring to "non SQL" or "non relational")[1] database provides a mechanism for storage and retrieval of data that is modeled in means other than the tabular relations used in relational databases. Such databases have existed since the late 1960s, but did not obtain the "NoSQL" moniker until a surge of popularity in the early twenty-first century,[2] triggered by the needs of Web 2.0 companies.[3][4][5] NoSQL databases are increasingly used in big data and real-time web applications.[6] NoSQL systems are also sometimes called "Not only SQL" to emphasize that they may support SQL-like query languages, or sit alongside SQL database in a polyglot persistence architecture.[7][8]
@@ -423,7 +423,7 @@ class Migration(migrations.Migration):
 
             You''d want to get some funding to run the tests (or maybe solicit Google or Amazon to see if you could get the instance time donated once a month or something.
 
-            If you started small, with maybe a portion of these features, and then scaled up over time, you might actually get to the point where you had tests that emulated a power failure, or master/slave and dual master scenarios and how they handle certain common network errors (split-brain). That would be an amazing resource.
+            If you started small, with maybe a portion of these features, and then scaled up over time, you might actually get to the point where you had tests that emulated a power failure, or main/subordinate and dual main scenarios and how they handle certain common network errors (split-brain). That would be an amazing resource.
 
             Edit: It occurs to me I probably should have read more of the article, since this is sort of what they are doing already...
 
