@@ -1,5 +1,5 @@
 Click==7.0
-Jinja2==2.10
+Jinja2==2.11.3
 livereload==2.5.2
 Markdown==3.0.1
 MarkupSafe==1.0
